@@ -1,0 +1,50 @@
+
+/*
+  重置样式
+  http://jsfiddle.net/o8dk3z4u/2/
+  https://segmentfault.com/q/1010000000694663
+  <div class="box">
+    <img src="../img/logo@2x.png" alt="">pabcdqyz
+</div>
+.box{
+  font-size: 40px;
+  border:1px solid red;
+}
+img {
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+}
+从以上代码可以看出，img标签根据基线对齐，下面会有4px空白
+所有inline，inline-block都会有这个问题，
+该问题会受到lineheight、fontsize以及vertical-align的共同影响，
+不是BUG，而是对齐的标准
+*/
+
+body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, input, form, a, p, textarea {
+    margin: 0;
+    padding: 0;
+}
+
+ol, ul, li {
+    list-style: none;
+}
+
+img {
+    border: none;
+    display: block;
+
+}
+
+/*IE专有属性，设置缩放，可以触发ie的hasLayout属性，清除浮动、清除margin的重叠等。*/
+.clearfloat {
+    zoom: 1;
+}
+
+.clearfloat::after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0;
+}
