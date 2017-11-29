@@ -440,6 +440,55 @@ var countBits = function(num) {
     return number
 };
 
+/*
+ * https://leetcode.com/problems/power-of-two/description/
+ * Given an integer, write a function to determine if it is a power of two.
+ * @param {number} n
+ * @return {boolean}
+ * 判断n是否为2的幂
+ * 2的x次幂，表示为2进制数为100...00
+ * 那么 n & (n - 1)一定为0
+ */
+var isPowerOfTwo = function(n) {
+    return n > 0 && (n & n - 1) === 0
+};
+
+/*
+ https://leetcode.com/problems/power-of-four/description/
+* Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
+
+Example:
+Given num = 16, return true. Given num = 5, return false.
+
+Follow up: Could you solve it without loops/recursion?
+* 
+*  4 ** n =>  2 ** 2n == > 写成2进制表示，1 00..00， 1右边一定有偶数个0 
+   如何判断1右边有偶数个0？  找一个数字magic(101010101010)，与num进行&运算
+   如果结果为0，说明1右边有偶数个0
+   另外，4的幂，一定是2的幂
+   magic是形如 0b0101010101010的三十一位二进制数(因为题目给出的是32 bits整数)
+ * @param {number} num
+ * @return {boolean}
+ */
+/**
+ * @param {number} num
+ * @return {boolean} 715827882 转成二进制只有三十位？？？
+ 
+ */
+var isPowerOfFour = function(num) {
+    // if((num > 0) && (num & (num - 1) === 0) && (num & 715827882) === 0) {
+    //     return true
+    // } 
+    if(num > 0) {
+        if((num & (num - 1)) === 0) {
+            if((num & 715827882) === 0) {
+                return true
+            }
+        }
+    }
+    
+    return false
+};
 
 
 </script>
