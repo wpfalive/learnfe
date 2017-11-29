@@ -376,5 +376,70 @@ var moveZeroes = function(nums) {
     
 };
 
+/*
+Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate the number of 1's in their binary representation and return them as an array.
+
+Example:
+For num = 5 you should return [0,1,1,2,1,2].
+
+Follow up:
+
+It is very easy to come up with a solution with run time O(n*sizeof(integer)). But can you do it in linear time O(n) /possibly in a single pass?
+Space complexity should be O(n).
+Can you do it like a boss? Do it without using any builtin function like __builtin_popcount in c++ or in any other language.
+*/
+/**
+ * @param {number} num
+ * @return {number[]}
+ */
+ /*-----Version 1--------*/
+var countBits = function(num) {
+    var number = new Array(num + 1)
+    for(var i = 0; i <= num; i++) {
+        number[i] = count1s(i)
+    }
+
+    return number
+};
+
+function count1s(n) {
+    var count = 0, digit = 0
+    while(n) {
+        digit = n % 2
+        n = (n - digit) / 2
+        if(digit) {
+            count ++
+        }
+    }
+    return count
+}
+
+/*-----Version 2 A better way 归纳法--------*/
+
+var countBits = function(num) {
+    var number = new Array(num + 1)
+    number[0] = 0
+    var next_two_power = 1
+    var prev_two_power
+    if(num == 0) {
+        return number
+    } 
+    
+    for(var i = 1; i <= num; i++) {
+        if(i == next_two_power) {
+            number[i] = 1
+            prev_two_power = next_two_power
+            next_two_power *= 2
+        } else {
+            // i - prev_two_power 用于计算当前元素到上一个2的幂的距离
+            // 这个距离也就等于第一个2的幂到0的距离 
+            // 这道题的关键在于0-3 4-7 8-15 之间，都是上一组数包含1的个数，再加1
+            number[i] = number[i - prev_two_power] + 1
+        }
+    }
+    return number
+};
+
+
 
 </script>
