@@ -1,6 +1,3 @@
-<script type="text/javascript">
-
-
 /**
  * https://leetcode.com/problems/add-digits/
  * @param {number} num
@@ -8,7 +5,6 @@
  * digit root
  * dn = 1 + (n - 1) % 9
  */
-//
 
 var addDigits = function(num) {
     return 1 + (num - 1) % 9
@@ -27,22 +23,23 @@ var addDigits = function(num) {
  */
 var plusOne = function(digits) {
     // 999 899
-    var result = '', c = 1
+    var result = '',
+        c = 1
     var resultArr = []
-    while(digits.length) {
+    while (digits.length) {
         c = digits.pop() + c
         result = c % 10 + result
         c = c > 9
     }
-    
-    if(c == 1) {
+
+    if (c == 1) {
         result = "1" + result //"1234"
     }
-    
-    for(var i = 0; i < result.length; i++) {
+
+    for (var i = 0; i < result.length; i++) {
         resultArr.push(+result.charAt(i))
     }
-    
+
     return resultArr
 };
 
@@ -55,23 +52,23 @@ var plusOne = function(digits) {
 var findMaxConsecutiveOnes = function(nums) {
     //当前连续数量
     var curKeep = 0
-    //历史连续数量
+        //历史连续数量
     var hisKeep = 0
-    
+
     var result = 0
-    for(var i = 0; i < nums.length; i++) {
-        if(nums[i] == 1) {
-            curKeep ++
-            if(curKeep > hisKeep) {
+    for (var i = 0; i < nums.length; i++) {
+        if (nums[i] == 1) {
+            curKeep++
+            if (curKeep > hisKeep) {
                 hisKeep = curKeep
             }
         } else {
             curKeep = 0
         }
-        
+
         //result = (nums[i] == 1) ? result ++ : 0
     }
-    
+
     return hisKeep
 };
 
@@ -83,18 +80,18 @@ var findMaxConsecutiveOnes = function(nums) {
  */
 var fizzBuzz = function(n) {
     var arr = []
-    for(var i = 1; i <= n; i++) {
+    for (var i = 1; i <= n; i++) {
         var result = ""
-        if(i % 3 == 0) {
-            result += "Fizz" 
-        } 
-        if(i % 5 == 0) {
+        if (i % 3 == 0) {
+            result += "Fizz"
+        }
+        if (i % 5 == 0) {
             result += "Buzz"
         }
-        
+
         arr.push(result || i + "")
     }
-    
+
     return arr
 };
 
@@ -107,22 +104,22 @@ var convertToBase7 = function(num) {
     var res = ""
     var n = 0
     var flag = num > 0 ? 1 : -1
-    if(num == 0) {
-        res = "0"    
+    if (num == 0) {
+        res = "0"
     }
-    
+
     num *= flag
-    
-    while(num != 0) {
-        
+
+    while (num != 0) {
+
         n = num % 7
         num = (num - n) / 7
         res = n + res
     }
-    
-    res = flag * (+res) + "" 
+
+    res = flag * (+res) + ""
     console.log(typeof res)
-    
+
     return res
 };
 
@@ -133,10 +130,10 @@ var convertToBase7 = function(num) {
  */
 var singleNumber = function(nums) {
     var result = nums[0]
-    for(var i = 0; i < nums.length; i++) {
+    for (var i = 0; i < nums.length; i++) {
         result = result ^ nums[i + 1]
     }
-    
+
     return result
 };
 
@@ -150,8 +147,8 @@ var solution = function(isBadVersion) {
 
     //二分法
     return function(n) {
-        var start = 1
-          , end = n
+        var start = 1,
+            end = n
         while (start <= end) {
             mid = parseInt(start + (end - start) / 2)
             if (!isBadVersion(mid)) {
@@ -178,13 +175,13 @@ var solution = function(isBadVersion) {
 var isHappy = function(n) {
     //用一个数组将所有产生的数，进来的时候先判断数组里是否有这个数
     var met = []
-    while(n != 1) {
+    while (n != 1) {
         n = sum(n)
-        
-        if(met[n] != undefined) {
+
+        if (met[n] != undefined) {
             return false
         }
-        
+
         met[n] = n
     }
     return true
@@ -193,7 +190,7 @@ var isHappy = function(n) {
 //给定一个整数n，求n每个位上所有数字平方的sum，返回这个sum
 var sum = function(n) {
     var result = 0
-    while(n != 0) {
+    while (n != 0) {
         var tmp = 0
         tmp = n % 10
         result += tmp * tmp
@@ -208,7 +205,7 @@ var sum = function(n) {
  */
 var judgeCircle = function(moves) {
     var position = [0, 0]
-    // {index, +-1}
+        // {index, +-1}
     var rlud = {
         "R": {
             "index": 0,
@@ -227,12 +224,12 @@ var judgeCircle = function(moves) {
             "dir": -1
         },
     }
-    
-    for(var i = 0; i < moves.length; i++) {
+
+    for (var i = 0; i < moves.length; i++) {
         position[rlud[moves[i]]["index"]] += rlud[moves[i]]["dir"]
     }
-    
-    if(position[0] == 0 && position[1] == 0) {
+
+    if (position[0] == 0 && position[1] == 0) {
         return true
     }
     return false
@@ -245,13 +242,14 @@ var judgeCircle = function(moves) {
 
 //判断n是否为某个数的平方
 var isPowerOfTwo = function(n) {
-    var start = 0, end = n
-    
-    while(start <= end) {
+    var start = 0,
+        end = n
+
+    while (start <= end) {
         mid = parseInt(start + (end - start) / 2)
-        if(mid * mid == n) {
+        if (mid * mid == n) {
             return true
-        } else if(mid * mid < n) {
+        } else if (mid * mid < n) {
             start = mid + 1
         } else {
             end = mid - 1
@@ -280,7 +278,7 @@ var isPowerOfTwo = function(n) {
  * 用换底公式？
  */
 var isPowerOfTwo = function(n) {
-    return Number.isInteger(Math.log(n/4)/Math.log(2));
+    return Number.isInteger(Math.log(n / 4) / Math.log(2));
 };
 
 //写一个程序，统计自身用了多少字符
@@ -328,15 +326,16 @@ For example:
 
 var convertToTitle = function(n) {
     var digits = ['A', 'B', 'C', 'D', 'E', 'F', 'G',
-                  'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 
-                  'P', 'Q', 'R', 'S', 'T', 'U', 'V', 
-                  'W', 'X', 'Y', 'Z']
+        'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+        'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+        'W', 'X', 'Y', 'Z'
+    ]
     var result = ""
     var rem = 0 //记录每次对26取模的余数
 
-    while(n) {
+    while (n) {
         rem = n % 26
-        if(rem == 0) {
+        if (rem == 0) {
             result = "Z" + result
             n = (n - rem) / 26 - 1
         } else {
@@ -346,7 +345,7 @@ var convertToTitle = function(n) {
     }
 
     return result
-    
+
 };
 convertToTitle(26)
 convertToTitle(51)
@@ -355,7 +354,7 @@ convertToTitle(80)
 convertToTitle(676)
 convertToTitle(702)
 convertToTitle(705)
-//52 AZ 27 AA 28 AB
+    //52 AZ 27 AA 28 AB
 convertToTitle(52)
 
 /*
@@ -373,7 +372,7 @@ Minimize the total number of operations.
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var moveZeroes = function(nums) {
-    
+
 };
 
 /*
@@ -392,10 +391,10 @@ Can you do it like a boss? Do it without using any builtin function like __built
  * @param {number} num
  * @return {number[]}
  */
- /*-----Version 1--------*/
+/*-----Version 1--------*/
 var countBits = function(num) {
     var number = new Array(num + 1)
-    for(var i = 0; i <= num; i++) {
+    for (var i = 0; i <= num; i++) {
         number[i] = count1s(i)
     }
 
@@ -403,12 +402,13 @@ var countBits = function(num) {
 };
 
 function count1s(n) {
-    var count = 0, digit = 0
-    while(n) {
+    var count = 0,
+        digit = 0
+    while (n) {
         digit = n % 2
         n = (n - digit) / 2
-        if(digit) {
-            count ++
+        if (digit) {
+            count++
         }
     }
     return count
@@ -421,12 +421,12 @@ var countBits = function(num) {
     number[0] = 0
     var next_two_power = 1
     var prev_two_power
-    if(num == 0) {
+    if (num == 0) {
         return number
-    } 
-    
-    for(var i = 1; i <= num; i++) {
-        if(i == next_two_power) {
+    }
+
+    for (var i = 1; i <= num; i++) {
+        if (i == next_two_power) {
             number[i] = 1
             prev_two_power = next_two_power
             next_two_power *= 2
@@ -473,20 +473,20 @@ Follow up: Could you solve it without loops/recursion?
 /**
  * @param {number} num
  * @return {boolean} 715827882 转成二进制只有三十位？？？
-
+ 
  */
 var isPowerOfFour = function(num) {
     // if((num > 0) && (num & (num - 1) === 0) && (num & 715827882) === 0) {
     //     return true
     // } 
-    if(num > 0) {
-        if((num & (num - 1)) === 0) {
-            if((num & 715827882) === 0) {
+    if (num > 0) {
+        if ((num & (num - 1)) === 0) {
+            if ((num & 715827882) === 0) {
                 return true
             }
         }
     }
-    
+
     return false
 };
 
@@ -505,17 +505,43 @@ Minimize the total number of operations.
  */
 var moveZeroes = function(nums) {
     var curIndex = 0
-    for(var i = 0; i < nums.length; i++) {
-        if(nums[i] !== 0) {
+    for (var i = 0; i < nums.length; i++) {
+        if (nums[i] !== 0) {
             nums[curIndex] = nums[i]
-            curIndex ++
+            curIndex++
         }
     }
-    
-    for(var i = curIndex; i < nums.length; i++) {
+
+    for (var i = curIndex; i < nums.length; i++) {
         nums[i] = 0
     }
 };
+/*
+https://leetcode.com/problems/rotate-array/description/
+Rotate an array of n elements to the right by k steps.
 
+For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].
 
-</script>
+Note:
+Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
+*/
+
+/*version 1*/
+var rotate = function(nums, k) {
+    //每次从数组末尾pop, 然后从数组开头unshift
+
+    for (var i = 0; i < k; i++) {
+        var end = nums.pop()
+        nums.unshift(end)
+    }
+};
+
+var rotate = function(nums, k) {
+    var arr = [];
+    for (var i = 0; i < nums.length; i++) {
+        arr[(i + k) % nums.length] = nums[i];
+    }
+    for (var i = 0; i < nums.length; i++) {
+        nums[i] = arr[i];
+    }
+};
