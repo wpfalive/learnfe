@@ -545,3 +545,232 @@ var rotate = function(nums, k) {
         nums[i] = arr[i];
     }
 };
+
+
+/**
+ * Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+A rather straight forward solution is a two-pass algorithm using counting sort.
+First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.
+
+Could you come up with an one-pass algorithm using only constant space?
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+/*
+two-pass
+ */
+var sortColors2 = function(nums) {
+    var ones = 0, twos = 0, zeros = 0, curIndex = 0
+    for(var i = 0; i < nums.length; i++) {
+        if(nums[i] === 1) {
+            ones ++
+        } else if(nums[i] === 2) {
+            twos ++
+        } else {
+            zeros ++
+        }
+    }
+    
+    for(var i = 0; i < nums.length; i++) {
+        if(i < zeros) {
+            nums[i] = 0
+        } else if(i < ones + zeros) {
+            nums[i] = 1
+        } else {
+            nums[i] = 2
+        }
+    }
+};
+
+/**
+ * one-pass 主要思想为，遇到0就向左移动，遇到2就向右移动
+ * 向左移动元素可能的情况是 1,0,0这时需要把0移动到左边，移动后，curPos指向1，因此需要再+1
+ * 向右移动元素可能的情况是，1,2,0，curPos原本指向2，移动后，curPos的值不变，这时就自动指向0了
+ * 
+ * 移动后
+ * 
+ * @param  {[type]} nums [description]
+ * @return {[type]}      [description]
+ */
+var sortColors = function(nums) {
+    //i用作下标，curPos指示当前的元素
+    curPos = 0
+    for(var i = 0; i < nums.length; i++) {
+        if(nums[curPos] === 0 && i != 0) {
+            nums.splice(curPos, 1)
+            nums.unshift(0)
+            curPos++
+        } else if(nums[curPos] === 2) {
+            nums.splice(curPos, 1)
+            nums.push(2)
+        } else {
+            curPos ++
+        }
+
+    }
+};
+
+// one pass in place solution
+//leetcode上的其他方法，没有看明白
+var sortColors1 = function(A) {
+    var n0 = -1, n1 = -1, n2 = -1
+    for (var i = 0; i < A.length; ++i) {
+        if (A[i] == 0) 
+        {
+            A[++n2] = 2
+            A[++n1] = 1
+            A[++n0] = 0
+        }
+        else if (A[i] == 1) 
+        {
+            A[++n2] = 2
+            A[++n1] = 1
+        }
+        else if (A[i] == 2) 
+        {
+            A[++n2] = 2
+        }
+    }
+};
+
+
+
+/**
+ * @param {number} n
+ * @return {boolean}
+ * 判断给定的数是否是3的x次幂
+ * 
+ * https://leetcode.com/problems/power-of-three/description/
+ * Given an integer, write a function to determine if it is a power of three.
+ *
+ * Follow up:
+ * Could you do it without using any loop / recursion?
+ * 思路
+ * 1162261467是3的19次方。为什么选到了3的19次方？
+ * 因为3的19次方是小于2147483647的最大的3的x次方
+ * 3的20次方等于348684401，大于了2147483647,会越界
+ * 推广：这个办法可以用来判断一个数是否是5的x次方
+ * Math.log(2147483647) / Math.log(2147483647) = 13
+ * 5 ** 13 = 1220703125, 那么只要 1220703125 % n == 0
+ * 我们就可以确定 n 一定是5的x次方
+ * 可以用来判断所有的素数
+ * 
+ */
+var isPowerOfThree = function(n) {
+    return n > 0 && 1162261467 % n == 0
+};
+
+/**
+ * https://leetcode.com/problems/two-sum/description/
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+
+//每次把遍历到的数x的下标存在对象里。判断另一半的数target - x是否已经在对象里了。如果在，
+//就返回target-x的下标和x的下标
+var twoSum = function(nums, target) {
+    var numObj = {},
+        factor
+    
+    for(var i = 0; i < nums.length; i++) {
+        factor = target - nums[i]
+        if(factor in numObj) {
+            return [numObj[factor], i]
+        } else {
+            numObj[nums[i]] = i
+        }
+    }
+};
+
+
+//由于需要对数组进行排序再查找，排序后的下标就不是原来的下标了，因此要保存一份原来的数组，用于确定之前的下标是多少
+var twoSum2 = function(nums, target) {
+
+    var numsOrigin = nums.slice()
+    
+    nums.sort((a, b) => a - b)
+    //左边的下标和右边的下标
+    var curLeft = 0,
+        curRight = nums.length - 1,
+        res = new Array(2)
+    for(var i = 0; i < nums.length; i++) {
+        var curSum = nums[curLeft] + nums[curRight]
+        if(curSum == target) {
+            res[0] = curLeft
+            res[1] = curRight
+            break
+        } else if(curSum > target) {
+            curRight --
+        } else {
+            curLeft ++
+        }
+    }
+    if(nums[res[0]] === nums[res[1]]) {
+        res[0] = numsOrigin.indexOf(nums[res[0]])
+        res[1] = numsOrigin.lastIndexOf(nums[res[1]])
+     } else {
+        res[0] = numsOrigin.indexOf(nums[res[0]])
+        res[1] = numsOrigin.indexOf(nums[res[1]])
+     }
+
+
+    return res
+};
+
+/**
+ * https://leetcode.com/problems/single-number-ii/description/
+ * Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
+
+Note:
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+ * @param  {[type]} int[] A             [description]
+ * @return {[type]}       [description]
+ */
+
+/*我的版本，使用的一个对象去记录每个数字出现的次数，然后找出出现一次的那个数*/
+var singleNumber = function(nums) {
+    var map = {}
+    for(var i = 0; i < nums.length; i++) {
+        if(nums[i] in map) {
+            map[nums[i]]++
+        } else {
+            map[nums[i]]=1
+        }
+    }
+    
+    for(var item in map) {
+        if(map[item] === 1) {
+            return +item
+        }
+    }
+};
+
+/**
+ * 
+ * Beautiful. Let me describe it to see if I'm understanding it right:
+
+First time number appear -> save it in "ones"
+
+Second time -> clear "ones" but save it in "twos" for later check
+
+Third time -> try to save in "ones" but value saved in "twos" clear it.
+
+ * @param  {[type]} int[] A             [description]
+ * @return {[type]}       [description]
+ */
+public int singleNumber(int[] A) {
+    int ones = 0, twos = 0;
+    for(int i = 0; i < A.length; i++){
+        ones = (ones ^ A[i]) & ~twos;
+        twos = (twos ^ A[i]) & ~ones;
+    }
+    return ones;
+}
+
+
+
+
+
