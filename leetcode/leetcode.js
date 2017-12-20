@@ -770,6 +770,466 @@ public int singleNumber(int[] A) {
     return ones;
 }
 
+/**
+ * https://leetcode.com/problems/rotate-list/description/
+ * Given a list, rotate the list to the right by k places, where k is non-negative.
+ * Given 1->2->3->4->5->NULL and k = 2,
+
+ * return 4->5->1->2->3->NULL.
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+/*
+实现链表的pop和unshift方法
+A -> B -> C -> D -> E
+D -> E -> A -> B -> C 实际移动的位置是 k % lenght, 因为一个元素移动length步，整个队列就恢复了原来的样子
+
+*/
+var rotateRight = function(head, k) {
+    if(!head) {
+        return null
+    }
+    // if(!head.next) {
+    //     return head
+    // }
+    
+    //统计队列的结点数
+    var length = 1,
+        tail = head,
+        newHead = head
+    
+    while(tail.next) {
+        tail = tail.next
+        length++
+    }
+    //循环结束后，tail指向最后一个结点
+    //这时把最后一个结点指向头结点
+    tail.next = head
+    
+    //如果k%length为0，那么整个列表移动之后恢复了原来的样子
+    //如果k%length不为0，那么移动余数步
+    if(k %= length) {
+        for(var i = 0; i < length - k; i++) {
+            tail = tail.next
+        }
+    }
+    
+    newHead = tail.next
+    tail.next = null
+    
+    return newHead
+};
+
+
+/**
+ * Reshape the Matrix
+ * https://leetcode.com/submissions/detail/130627000/
+ * @param  {[type]} nums [description]
+ * @param  {[type]} r    [description]
+ * @param  {[type]} c    [description]
+ * @return {[type]}      [description]
+ */
+var sameNumItems = function (nums, r, c) {
+    var matrix1Size = nums.length * nums[0].length;
+    var matrix2Size = r * c;
+    return matrix1Size === matrix2Size;
+};
+var matrixReshape = function (nums, r, c) {
+    if (!sameNumItems(nums, r, c))
+        return nums;
+    var flatMatrix = [].concat.apply([], nums);
+    var newMatrix = [];
+    while (flatMatrix.length > 0) {
+        newMatrix.push(flatMatrix.splice(0, c));
+    }
+    return newMatrix;
+};
+
+/**
+ * https://leetcode.com/problems/valid-parentheses/description/
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function(s) {
+    if (s.length == 0) {return true}
+    if (s.length % 2 == 1) {return false}
+    
+    let lastChar = []
+    
+    for (let i=0;i<s.length;i++) {
+        switch (s[i]) {
+            case '(':
+            case '[':
+            case '{':
+                lastChar.push(s[i])
+                break;
+            case ')':
+                if (lastChar.pop() != '(') {return false}
+                break
+            case ']':
+                if (lastChar.pop() != '[') {return false}
+                break
+            case '}':
+                if (lastChar.pop() != '{') {return false}
+                break
+        }
+    }
+    
+    return lastChar.length == 0
+};
+
+
+/**
+ * https://leetcode.com/problems/baseball-game/description/
+ * @param {string[]} ops
+ * @return {number}
+ */
+let calPoints = function(ops) {
+    let a = [];
+    ops.forEach((x) => {
+         if (x === '+') {
+             a.push(a[a.length - 2] + a[a.length - 1]);
+         } else if (x === 'D') {
+             a.push(a[a.length - 1] * 2);
+         } else if (x === 'C') {
+             a.pop();
+         } else {
+             a.push(parseInt(x));
+         }
+    });
+    return a.reduce((s, x) => s + x, 0);
+};
+
+/**
+ * https://leetcode.com/problems/simplify-path/description/
+ * @param {string} path
+ * @return {string}
+ */
+var simplifyPath = function(path) {
+  path=path.split('/')
+  let stack=[];
+  for(var i=0; i<path.length; i++){
+    let p = path[i];
+    if(p==='..'){
+      stack.pop();
+    }
+    else if(p!=='.' && p != ''){
+     stack.push(path[i]) 
+    }
+  }
+  return '/' + stack.join('/')  
+};
+
+/**
+ * https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+ * @param {string[]} tokens
+ * @return {number}
+ */
+var evalRPN = function(tokens) {
+    let stack = [];
+    let operators = ['+', '-', '*', '/'];
+    tokens.forEach(token => {
+        if (operators.includes(token)) {
+            // do the operation
+            let r = stack.pop();
+            let l = stack.pop();
+            let result;
+            switch(token) {
+                case '+':
+                    result = l + r;
+                    break;
+                case '-':
+                    result = l - r;
+                    break;
+                case '*':
+                    result = l * r;
+                    break;
+                case '/':
+                    result = l / r;
+                    break;
+            }
+            stack.push(parseInt(result));
+        } else {
+            stack.push(parseInt(token));
+        }
+    });
+    return stack.pop();
+};
+
+
+/**
+ * https://leetcode.com/problems/find-the-duplicate-number/description/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findDuplicate = function(nums) {
+    if (nums.length > 1)
+    {
+        let slow = nums[0];
+        let fast = nums[nums[0]];
+        while (slow != fast)
+        {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+
+        fast = 0;
+        while (fast != slow)
+        {
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        return slow;
+    }
+    return -1;
+};
+
+/**
+ * https://leetcode.com/problems/set-mismatch/description/
+ * 观察这个函数是怎么找到重复数字的
+ * @param  {[type]} nums [description]
+ * @return {[type]}      [description]
+ */
+var findErrorNums = function(nums) {
+    const hash = Array(nums.length).fill(0)
+    const res = []
+    let sum = 0
+    for (let i = 0; i < nums.length; i++) {
+        const pos = nums[i] - 1
+        sum += nums[i]
+        if (hash[pos]) {
+            res.push(nums[i])
+        }
+        hash[pos]++
+    }
+    const total = ((1 + nums.length) * nums.length / 2)
+    res.push(res[0] + total - sum)
+    return res
+};
+
+
+/**
+ * https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+ * @param  {[type]} root [description]
+ * @return {[type]}      [description]
+ */
+var levelOrder = function(root) {
+    const results = [];
+    if (!root) return results;
+    const getLayerValues = (nodes) => {
+        const childs = [];
+        const values = [];
+        for (let i = 0; i < nodes.length; i += 1) {
+            const node = nodes[i];
+            values.push(node.val);
+            if (node.left) childs.push(node.left);
+            if (node.right) childs.push(node.right);
+        }
+        results.push(values);
+        if (childs.length) getLayerValues(childs);
+    };
+    getLayerValues([root]);
+    return results;
+};
+
+/**
+ * [levelOrderBottom description]
+ * @param  {[type]} root [description]
+ * @return {[type]}      [description]
+ */
+var levelOrderBottom = function(root) {
+    
+    var result = [];
+    
+    traverse(root, 0);
+    
+    function traverse (node, level) {
+        if (!node) return;
+        
+        if(result.length < level + 1) {
+            result[level] = [node.val];
+        } else {
+            result[level].push(node.val);
+        }
+
+        if (node.left) {
+            traverse(node.left, level + 1);
+        }
+        
+        if (node.right) {
+            traverse(node.right, level + 1);
+        }
+    }
+    
+    var reverse_result = [];
+    
+    for (var i=result.length - 1; i>=0; i--) {
+        reverse_result.push(result[i]);
+    }
+    
+    return reverse_result;
+}
+
+var levelOrderBottom = function(root) {
+  var res = [];
+  var count = 0;
+  dfs(root, res, count);
+  function dfs(root, res, count) {
+    if (root == null) return;
+    if (!res[count]) res[count] = [];
+    res[count].push(root.val);
+    count++;
+    if (root.left) dfs(root.left, res, count);
+    if (root.right) dfs(root.right, res, count);
+  }
+  return res.reverse();
+};
+
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var majorityElement = function(nums) {
+    let majority = nums[0];
+    let majorityCount = 1;
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] === majority) {
+            majorityCount++;
+        } else {
+            majorityCount--;
+            if (majorityCount === 0) {
+                majority = nums[i];
+                majorityCount = 1;
+            }
+        }
+    }
+    return majority;
+};
+
+// public class Solution {
+//     public int majorityElement(int[] num) {
+
+//         int major=num[0], count = 1;
+//         for(int i=1; i<num.length;i++){
+//             if(count==0){
+//                 count++;
+//                 major=num[i];
+//             }else if(major==num[i]){
+//                 count++;
+//             }else count--;
+            
+//         }
+//         return major;
+//     }
+// }
+// 
+/**
+ * https://leetcode.com/problems/minimum-depth-of-binary-tree/description/
+ * @param  {[type]} tree [description]
+ * @return {[type]}      [description]
+ */
+function minDepth(tree) {
+  if (tree === null) return 0;
+  var left = minDepth(tree.left);
+  var right = minDepth(tree.right);
+  var min = Math.min(left, right) || Math.max(left, right);
+  return min + 1;
+}
+
+
+var preorderTraversal = function traverse(root, result = []) {
+  var stack = []
+  while(true) {
+    if (root) {
+      stack.push(root)
+      result.push(root.val)
+      root = root.left
+    } else {
+      if (stack.length === 0) {
+        break
+      }
+      root = stack.pop()
+      root = root.right
+    }
+  }
+  return result
+}
+
+/**
+ * 有序数组转排序二叉树
+ * @param  {[type]} ary   [description]
+ * @param  {[type]} start [description]
+ * @param  {[type]} end   [description]
+ * @return {[type]}       [description]
+ */
+function sortedArray2BST(ary, start, end) {
+    if(start > end) {
+        return null
+    }
+//     var mid = parseInt((start + end) / 2)
+    var mid = start + parseInt((end - start) / 2) //防止加法产生越界
+    var node = {
+        val: ary[mid],
+        left: null,
+        right: null
+    }
+    node.left = sortedArray2BST(ary, start, mid - 1)
+    node.right = sortedArray2BST(ary, mid + 1, end)
+
+    return node
+}
+
+function ary2bst(ary) {
+    
+    return sortedArray2BST(ary, 0, ary.length - 1)
+}
+
+/**
+ * http://www.geeksforgeeks.org/print-left-view-binary-tree/
+ * Input : 
+                 1
+               /   \
+              2     3
+             / \     \
+            4   5     6             
+ * Output : 1 2 4
+ * 按层遍历，存储每层遍历到的第一个结点
+ * @return {[type]} [description]
+ */
+function btLeftView(root) {
+    var res = [],
+        queue = [root]
+
+    while(queue.length) {
+        var len = queue.length
+        for(let i = 0; i < len; i++) {
+            var node = queue.shift()
+            if(!i) {
+                res.push(node.val)
+            }
+
+            if(node.left) {
+                queue.push(node.left)
+            }
+            if(node.right) {
+                queue.push(node.right)
+            }
+            
+        }
+    }
+
+    return res
+}
+
 
 
 
