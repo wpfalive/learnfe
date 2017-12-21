@@ -1230,6 +1230,67 @@ function btLeftView(root) {
     return res
 }
 
+/**
+ * 是否是平衡二叉树
+ * 平衡二叉树是一棵空树或它的左右两个子树的高度差的绝对值不超过1
+ * @param  {[type]}  root [description]
+ * @return {Boolean}      [description]
+ */
+function isBalanced(root) {
+    if(!root) {
+        return true
+    }
+
+    if(treeHeight(root.left) - treeHeight(root.right) > 1) {
+        return false
+    }
+
+    return isBalanced(root.left) && isBalanced(root.right)
+}
+
+/**
+ * 一个结点到离它最远的叶子结点的距离为数据的高度
+ * 按层遍历计算层次数
+ * @return {[type]} [description]
+ */
+function treeHeight(root) {
+    if(!root) {
+        return 0
+    }
+
+    var height = 0,
+        queue = [root]
+    while(queue.length) {
+        var len = queue.length
+        height ++
+        for(let i = 0; i < len; i++) {
+            var node = queue.shift()
+            if(node.left) {
+                queue.push(node.left)
+            }
+            if(node.right) {
+                queue.push(node.right)
+            }
+        }
+    }
+    
+    return height
+}
+
+/**
+ * 计算树高度的递归写法
+ * @param  {[type]} root [description]
+ * @return {[type]}      [description]
+ */
+function treeHeight(root) {
+    /*base case tree is empty*/
+    if(!root) {
+        return 0
+    }
+
+    return 1 + Math.max(treeHeight(root.left), treeHeight(root.right))
+}
+
 
 
 
