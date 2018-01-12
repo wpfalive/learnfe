@@ -38,52 +38,64 @@
             }
             return o
         }
+
+        var GuaGame = function() {
+            var g ={
+                actions: {},
+                keydowns: {},
+            }
+            var canvas = document.querySelector("#id-canvas")
+            var context = canvas.getContext('2d')
+            g.canvas = canvas
+            g.context = context
+            window.addEventListener("keydown", function(event) {
+                g.keydowns[event.key] = true
+            })
+            window.addEventListener("keyup", function(event) {
+                g.keydowns[event.key] = false
+            })
+
+            g.registerAction = function(key, callback) {
+                g.actions[key] = callback
+            }
+
+            setInterval(function() {
+                //events
+                var actions = Object.keys(g.actions)
+                for(var i = 0; i < actions.length; i++) {
+                    var key = actions[i]
+                    //如果某个按键被按下，则执行对应的action
+                    if(g.keydowns[key]) {
+                        g.actions[key]()
+                    }
+                }
+                // g.update()
+                //clear
+                g.context.clearRect(0, 0, canvas.width, canvas.height)
+                g.draw()
+
+            }, 1000/30)
+
+            return g
+        }
         
 
         var __main = function() {
-            var canvas = document.querySelector("#id-canvas")
-            var context = canvas.getContext('2d')
-
-            
-            var leftDown = false
-            var rightDown = false
             var paddle = Paddle()
-            
+            var game = GuaGame()
 
-            //火狐开发者版本中 不写 img.onload事件也能加载出图片
-            // img.addEventListener("load", () => {
-            //     //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-            //     context.drawImage(paddle.image, 150, 200)
-            // })
+            // game.update = function() {
+            // }
 
-            addEventListener("keydown", event => {
-                var k = event.key
-                if(k == 'a') {
-                    leftDown = true
-                } else if(k == 'd') {
-                    rightDown = true
-                }
+            game.draw = function() {
+                game.context.drawImage(paddle.image, paddle.x, paddle.y)
+            }
+            game.registerAction('a', function() {
+                paddle.moveLeft()
             })
-
-            addEventListener("keyup", event => {
-                var k = event.key
-                if(k == 'a') {
-                    leftDown = false
-                } else if(k == 'd') {
-                    rightDown = false
-                }
+            game.registerAction('d', function() {
+                paddle.moveRight()
             })
-
-            setInterval(function() {
-                if(leftDown) {
-                    paddle.moveLeft()
-                } else if(rightDown) {
-                    paddle.moveRight()
-                }
-
-                context.clearRect(0, 0, canvas.width, canvas.height)
-                context.drawImage(paddle.image, paddle.x, paddle.y)
-            }, 1000/30) 
         }
 
         __main()
