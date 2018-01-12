@@ -1,1 +1,1 @@
-my front end way
+my front-end way
