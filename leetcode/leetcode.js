@@ -1233,6 +1233,8 @@ function btLeftView(root) {
 /**
  * 是否是平衡二叉树
  * 平衡二叉树是一棵空树或它的左右两个子树的高度差的绝对值不超过1
+ * 时间复杂度O(nlogn)
+ * 最坏情况下时间复杂度为O(n ** 2)
  * @param  {[type]}  root [description]
  * @return {Boolean}      [description]
  */
@@ -1247,6 +1249,52 @@ function isBalanced(root) {
 
     return isBalanced(root.left) && isBalanced(root.right)
 }
+
+/**
+ * 判断是否平衡二叉树的优化版本
+ * 
+ * 时间复杂度为O(n) 
+ * @param  {[type]}  root [description]
+ * @return {Boolean}      [description]
+
+The second method is based on DFS. Instead of calling depth() explicitly for each child node, we return the height of the current node in DFS recursion. When the sub tree of the current node (inclusive) is balanced, the function dfsHeight() returns a non-negative value as the height. Otherwise -1 is returned. According to the leftHeight and rightHeight of the two children, the parent node could check if the sub tree
+is balanced, and decides its return value.
+ */
+
+class solution {
+public:
+int dfsHeight (TreeNode *root) {
+        if (root == NULL) return 0;
+        
+        int leftHeight = dfsHeight (root -> left);
+        if (leftHeight == -1) return -1;
+        int rightHeight = dfsHeight (root -> right);
+        if (rightHeight == -1) return -1;
+        
+        if (abs(leftHeight - rightHeight) > 1)  return -1;
+        return max (leftHeight, rightHeight) + 1;
+    }
+    bool isBalanced(TreeNode *root) {
+        return dfsHeight (root) != -1;
+    }
+};
+// 
+/**
+ * leetcode网友的答案
+ * @param  {[type]}  root [description]
+ * @return {Boolean}      [description]
+ */
+var isBalanced = function(root) {
+    if (root === null) return true;
+    function check(node, d) {
+        if (node === null) return d;
+        var left = check(node.left, d + 1);
+        var right = check(node.right, d + 1);
+        if (left === -1 || right === -1 || Math.abs(left - right) > 1) return -1;
+        return Math.max(left, right);
+    }
+    return check(root, 0) !== -1;
+};
 
 /**
  * 一个结点到离它最远的叶子结点的距离为数据的高度
@@ -1291,6 +1339,105 @@ function treeHeight(root) {
     return 1 + Math.max(treeHeight(root.left), treeHeight(root.right))
 }
 
+/**
+ * 前序遍历二叉树，递归版本
+ */
+var preorderTraversal = function(root) {
+    return preorder(root, [])
+};
+
+var preorder = function(root, res) {
+    if(!root) {
+        return res
+    }
+    
+    res.push(root.val)
+    preorder(root.left, res)
+    preorder(root.right, res)
+    
+    return res
+}
+
+
+/**
+ * Flatten Binary Tree to Linked List
+ * @type {[type]}
+ */
+private TreeNode prev = null;
+
+public void flatten(TreeNode root) {
+    if (root == null)
+        return;
+    flatten(root.right);
+    flatten(root.left);
+    root.right = prev;
+    root.left = null;
+    prev = root;
+}
+
+/**
+ * 93. Restore IP Addresses
+ * @param  {[type]} s [description]
+ * @return {[type]}   [description]
+ * backtracking recursive
+ */
+var restoreIpAddresses = function(s, parts = [], result = []) {
+    if(parts.length === 3) {
+        if(isIpPart(s)) {
+            //去除前导0. 比如01等
+            parts.push(s)
+            result.push(parts.join("."))
+            parts.pop()
+        }
+        return
+    }
+    
+    for(var i = 1; i <= 3; i++) {
+        var part = s.slice(0, i)
+        if(isIpPart(part)) {
+            parts.push(part)
+            restoreIpAddresses(s.slice(i), parts, result)
+            parts.pop()
+        }
+    }
+    return result
+};
+
+var isIpPart = function(s) {
+    //01 001
+    if(s.length > 1 && s.charAt(0) == '0') {
+        return false
+    }
+    return s.length && Number(s) < 256
+}
+
+/**
+ * 39. combinationSum
+ * @param  {[type]} candidates [description]
+ * @param  {[type]} target     [description]
+ * @return {[type]}            [description]
+ */
+var combinationSum = function(ary, parts = [], target) {
+    for(var i = 0; i < ary.length i++) {
+        parts.push(ary[i])
+        if(sum(parts) === target) {
+            console.log(parts.slice())
+            parts.pop()
+            continue
+        }
+        if(sum(parts) > target) {
+            parts.pop()
+            continue
+        }
+
+        combinationSum(ary.slice(i + 1), parts, target)
+        parts.pop()
+    }
+}
+
+var sum = function(ary) {
+    return ary.reduce((a, b) =>  a + b, 0)
+}
 
 
 

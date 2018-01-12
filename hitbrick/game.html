@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>game 1</title>
+    <style>
+        canvas {
+            border: 1px black solid;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="id-canvas" width="400px" height="300px"></canvas>
+
+    <script>
+        var log = console.log
+        var canvas = document.querySelector("#id-canvas")
+        var context = canvas.getContext('2d')
+
+        var x = 150
+        var y = 200
+        var speed = 5
+        var leftDown = false
+        var rightDown = false
+        var img = new Image()
+        img.src = 'paddle.png'
+        img.style.width = '180px'
+        img.style.height = '30px'
+        
+        log(img)
+        //火狐开发者版本中 不写 img.onload事件也能加载出图片
+        img.addEventListener("load", () => {
+            //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+            context.drawImage(img, 150, 200)
+        })
+
+        addEventListener("keydown", event => {
+            var k = event.key
+            if(k == 'a') {
+                leftDown = true
+            } else if(k == 'd') {
+                rightDown = true
+            }
+        })
+
+        addEventListener("keyup", event => {
+            var k = event.key
+            if(k == 'a') {
+                leftDown = false
+            } else if(k == 'd') {
+                rightDown = false
+            }
+        })
+
+        setInterval(function() {
+            if(leftDown) {
+                x -= speed
+            } else if(rightDown) {
+                x += speed
+            }
+
+            context.clearRect(0, 0, canvas.width, canvas.height)
+            context.drawImage(img, x, y)
+        }, 1000/30)
+
+
+    </script>
+</body>
+</html>
