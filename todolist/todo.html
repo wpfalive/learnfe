@@ -490,13 +490,37 @@
             var btnActive = document.querySelector(".active")
             var btnCompleted = document.querySelector(".showcomplete")
             btnAll.addEventListener("click", event => {
-                
+                var liItems = document.querySelectorAll("ul.todo-list > li")
+                var realItems = Array.from(liItems)
+                realItems.forEach(item => {
+                    item.style.display = "block"
+                })
             })
             btnActive.addEventListener("click", event => {
                 log("btnActive")
+                var liItems = document.querySelectorAll("ul.todo-list > li")
+                var realItems = Array.from(liItems)
+                realItems.forEach(item => {
+                    console.log(item)
+                    if(item.className === "completed") {
+                        item.style.display = "none"
+                    } else {
+                        item.style.display = "block"
+                    }
+                })
             })
             btnCompleted.addEventListener("click", event => {
                 log("btnCompleted")
+                var liItems = document.querySelectorAll("ul.todo-list > li")
+                var realItems = Array.from(liItems)
+                realItems.forEach(item => {
+                    console.log(item)
+                    if(item.className === "completed") {
+                        item.style.display = "block"
+                    } else {
+                        item.style.display = "none"
+                    }
+                })
             })
         }
 
