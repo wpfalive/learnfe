@@ -1,8 +1,7 @@
 var GuaGame = function(fps) {
-    var g ={
+    var g = {
         actions: {},
         keydowns: {},
-        paused: false,
     }
     var canvas = document.querySelector("#id-canvas")
     var context = canvas.getContext('2d')
@@ -15,22 +14,12 @@ var GuaGame = function(fps) {
         g.keydowns[event.key] = false
     })
 
-    window.addEventListener("keydown", function(event) {
-        if(event.key === "p") {
-            g.pauseGame()
-        }
-    })
-
     g.registerAction = function(key, callback) {
         g.actions[key] = callback
     }
 
     g.drawImage = function(guaImage) {
         g.context.drawImage(guaImage.image, guaImage.x, guaImage.y)
-    }
-
-    g.pauseGame = function() {
-        g.paused = !g.paused
     }
 
     setInterval(function() {

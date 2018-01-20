@@ -8,49 +8,40 @@
             border: 1px black solid;
         }
     </style>
+    <script src="utils.js"></script>
     <script src="guagame.js"></script>
-    <script src="ball.js"></script>
     <script src="paddle.js"></script>
+    <script src="ball.js"></script>
     <script src="block.js"></script>
+    <script src="level.js"></script>
 </head>
 <body>
     <canvas id="id-canvas" width="400px" height="300px"></canvas>
 
     <script>
-        var log = console.log
-
-        var imgFromPath = function(path) {
-            var img = new Image()
-            img.src = path
-            return img
-        } 
-
-        var rectIntersects = function(a, b) {
-            var o = a
-            if(b.y > o.y && b.y < o.y + o.image.height) {
-                if(b.x > o.x && b.x < o.x + o.image.width) {
-                    return true
-                }
+        var loadLevel = function(n) {
+            var n = n - 1
+            var level = levels[n]
+            var blocks = []
+            for(var i = 0; i < level.length; i++) {
+                var p = level[i]
+                var b = Block(p)
+                blocks.push(b)
             }
-            return false
+            return blocks
         }
 
         var __main = function() {
             var game = GuaGame(30)
+
             var paddle = Paddle()
             var ball = Ball()
-            var blocks = []
-            
-            //初始化block
-            for(var i = 0; i < 3; i++) {
-                var b = Block()
-                b.x = i * 100
-                b.y = 50
-                blocks.push(b)
-            }
+            var blocks = loadLevel(1)
+
+            var paused = false
 
             game.update = function() {
-                if(game.paused) {
+                if(paused) {
                     return
                 }
 
@@ -87,6 +78,14 @@
             })
             game.registerAction('f', function() {
                 ball.fire()
+            })
+            window.addEventListener("keydown", function(event) {
+                var k = event.key
+                if(k === "p") {
+                    paused = !paused
+                } else if("1234567".includes(k)) {
+                    blocks = loadLevel(Number(k))
+                }
             })
         }
 
