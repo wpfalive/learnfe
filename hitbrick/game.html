@@ -17,8 +17,13 @@
 </head>
 <body>
     <canvas id="id-canvas" width="400px" height="300px"></canvas>
+    <hr>
+    <input id="id-input-range" type="range" value="1">
 
     <script>
+        var paused = false
+        var blocks = []
+
         var loadLevel = function(n) {
             var n = n - 1
             var level = levels[n]
@@ -30,15 +35,35 @@
             }
             return blocks
         }
+        var enableDebugMode = function(enable) {
+            if(!enable) {
+                return
+            }
+
+            window.addEventListener("keydown", function(event) {
+                var k = event.key
+                if(k === "p") {
+                    paused = !paused
+                } else if("1234567".includes(k)) {
+
+                    blocks = loadLevel(Number(k))
+                }
+            })
+
+            window.addEventListener("input", function(event) {
+                var input = document.querySelector("#id-input-range")
+                window.fps = Number(input.value)
+            })
+        }
 
         var __main = function() {
-            var game = GuaGame(30)
+            enableDebugMode(true)
+
+            var game = GuaGame()
 
             var paddle = Paddle()
             var ball = Ball()
-            var blocks = loadLevel(1)
-
-            var paused = false
+            blocks = loadLevel(1)
 
             game.update = function() {
                 if(paused) {
@@ -52,13 +77,13 @@
                 for(var i = 0; i < blocks.length; i++) {
                     var b = blocks[i]
                     if(b.collide(ball)) {
-                        log("碰撞")
                         b.kill()
                         ball.bounce()
                     }
                 }
             }
 
+            //这里的blocks一直读取的是67行的内容，不会根据关卡输入的123来调整
             game.draw = function() {
                 game.drawImage(paddle)
                 game.drawImage(ball)
@@ -78,14 +103,6 @@
             })
             game.registerAction('f', function() {
                 ball.fire()
-            })
-            window.addEventListener("keydown", function(event) {
-                var k = event.key
-                if(k === "p") {
-                    paused = !paused
-                } else if("1234567".includes(k)) {
-                    blocks = loadLevel(Number(k))
-                }
             })
         }
 

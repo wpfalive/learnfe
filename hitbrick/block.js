@@ -18,10 +18,6 @@ var Block = function(position) {
         }
     }
 
-    o.collide = function() {
-        return 
-    }
-
     o.collide = function(ball) {
         return o.alive && (rectIntersects(o, ball) || rectIntersects(ball, o))
     }

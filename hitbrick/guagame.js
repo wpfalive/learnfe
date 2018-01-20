@@ -1,4 +1,4 @@
-var GuaGame = function(fps) {
+var GuaGame = function() {
     var g = {
         actions: {},
         keydowns: {},
@@ -22,7 +22,8 @@ var GuaGame = function(fps) {
         g.context.drawImage(guaImage.image, guaImage.x, guaImage.y)
     }
 
-    setInterval(function() {
+    window.fps = 30
+    var runloop = function() {
         //events
         var actions = Object.keys(g.actions)
         for(var i = 0; i < actions.length; i++) {
@@ -36,8 +37,13 @@ var GuaGame = function(fps) {
         //clear
         g.context.clearRect(0, 0, canvas.width, canvas.height)
         g.draw()
-
-    }, 1000/fps)
+        setTimeout(function() {
+            runloop()
+        }, 1000/window.fps)
+    }
+    //这里用setTimeout的原因是，如果用setInterval，那么fps无法动态被改变
+    
+    setTimeout(runloop, 1000/window.fps)
 
     return g
 }
