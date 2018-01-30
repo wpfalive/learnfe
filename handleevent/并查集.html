@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>并查集</title>
+</head>
+<body>
+    <script>
+        class UnionSet {
+            constructor(size) {
+                this.set = new Array(size).fill(-1)
+            }
+
+            //找到x的根元素
+            //递归的深度是logn(也就是树的高度)
+            findWithRouteCompress(x) {
+                // assert(x < this.set.length)
+
+                if(this.set[x] < 0) {
+                    return x
+                } else {
+                    return this.set[x] = find(this.set[x])
+                }
+            }
+
+            //不带路径压缩
+            find(x) {
+                if(this.set[x] < 0) {
+                    return x
+                } else {
+                    return find(this.set[x])
+                }
+            }
+
+            //两个元素是否在同一个集合中
+            same(x, y) {
+                return this.find(x) === this.find(y)
+            }
+            
+
+            unionByDepth(x, y) {
+                var rootx = this.find(x)
+                var rooty = this.find(y)
+                var depthx = this.set[rootx]
+                var depthy = this.set[rooty]
+                //把深度小的合并到深度大的元素上去
+                //如果深度一样，把数值小的和并到数值大的元素上去
+                if(depthx < depthy) {
+                    this.set[rootx] = rooty
+                } else if(depthy < depthx) {
+                    this.set[rooty] = rootx
+                } else {
+                    this.set[rootx] = rooty
+                    this.set[rooty]--
+                }
+            }
+
+            unionBySize(x, y) {
+                var rootx = this.findWithRouteCompress(x)
+                var rooty = this.findWithRouteCompress(y)
+                var sizex = -this.set[rootx]
+                var sizey = -this.set[rooty]
+                if(sizex < sizey) {
+                    this.set[rootx] = rooty
+                    this.set[rooty] = -sizex - sizey
+                } else {
+                    this.set[rooty] = rootx
+                    this.set[rootx] = -sizey - sizex
+                }
+
+            }
+        }
+
+    </script>
+</body>
+</html>

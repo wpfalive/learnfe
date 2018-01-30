@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class UnionSet {
+            constructor(size) {
+                this.set = new Array(size).fill(-1)
+            }
+
+            find(x) {
+                if(this.set[x] < 0) {
+                    return x
+                } else {
+                    return find(this.set[x])
+                }
+            }
+
+            same(x, y) {
+                return this.find(x) === this.find(y)
+            }
+
+            union(x, y) {
+                var rootx = this.find(x)
+                var rooty = this.find(y)
+                var depthx = this.set[rootx]
+                var depthy = this.set[rooty]
+                if(depthx < depthy) {
+                    this.set[rootx] = rooty
+                } else if(depthy < depthx) {
+                    this.set[rooty] = rootx
+                } else {
+                    this.set[rootx] = rooty
+                    this.set[rooty]--
+                }
+            } 
+        }
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

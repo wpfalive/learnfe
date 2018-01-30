@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>request</title>
+</head>
+<body>
+    <script>
+        function get(url, callback) {
+            var req = new XMLHttpRequest()
+            req.open("GET", url)
+            req.addEventListener("load", function() {
+                try {
+                    callback(req.responseText)
+                } catch(e) {
+                    console.log(e)
+                    callback(req.responseText)
+                }
+                
+            })
+            req.send(null)
+        }
+
+        function post(url, data, callback) {
+            var req = new XMLHttpRequest()
+            req.open("GET", url)
+            req.addEventListener("load", function() {
+                callback(req.responseText)
+            })
+            req.send(null)
+
+        }
+
+        function ajax(method, url, header, data, callback) {
+            var xhr = new XMLHttpRequest()
+            xhr.open(method, url, true)
+
+            xhr.setRequestHeader(header)
+            for(var key in header) {
+                xhr.setRequestHeader(key, header[key])
+            }
+
+            xhr.addEventListener("load", function(data) {
+                callback(xhr.responseText)
+            })
+
+            if(typeof data === 'string') {
+                xhr.send(data)
+            } else {
+                xhr.send(JSON.stringify(data))
+            }
+            xhr.send(null)
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

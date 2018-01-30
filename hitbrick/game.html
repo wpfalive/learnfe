@@ -21,7 +21,7 @@
     <input id="id-input-range" type="range" value="1">
 
     <script>
-        var paused = false
+        window.paused = false
         var blocks = []
 
         var loadLevel = function(n) {
@@ -43,7 +43,7 @@
             window.addEventListener("keydown", function(event) {
                 var k = event.key
                 if(k === "p") {
-                    paused = !paused
+                    window.paused = !window.paused
                 } else if("1234567".includes(k)) {
 
                     blocks = loadLevel(Number(k))
@@ -56,6 +56,7 @@
             })
         }
 
+        //增加一个功能，拖动砖块的位置
         var __main = function() {
             enableDebugMode(true)
 
@@ -66,7 +67,7 @@
             blocks = loadLevel(1)
 
             game.update = function() {
-                if(paused) {
+                if(window.paused) {
                     return
                 }
 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hash</title>
+</head>
+<body>
+    <script>
+        class HashMap {
+            constructor(initialSize = 10) {
+                this.keys = new Array(initialSize)
+                this.values = new Array(initialSize)
+                this.size = initialSize
+                this.load = 0
+            }
+
+            //装载率超过0.7时数组长度加倍，装载率不足0.35时数组长度减半
+            _reDistribute() {
+                var hashMap2 = new HashMap(this.size * 2)
+
+                // forEach不会遍历不存在数组中的元素
+                this.keys.forEach((key, index) => {
+                    hashMap2.set(key, this.values[index])
+                })
+                this.keys = hashMap2.keys
+                this.values = hashMap2.values
+                this.size = hashMap2.size
+                return this
+            }
+
+            _hash(key) {
+                return key.split("").reduce((sum, char, index) => {
+                    return sum + char.charCodeAt(0) * (index + 1)
+                }, 0) % this.size
+            }
+
+            _rehash(x) {
+                return x * x
+            }
+
+            // 尝试把get和set合并成一个函数
+            // 
+            set(key, value) {
+                var initPos = this._hash(key)
+                var pos
+                for(var i = 0; ; i++) {
+                    pos = (initPos + this._rehash(i)) % this.size
+                    if(this.keys[pos] === undefined) {
+                        this.keys[pos] = key
+                        this.values[pos] = value
+                        this.load++
+                        if(this.load / this.size > 0.7) {
+                            this._reDistribute()
+                        }
+                        break
+                    } else if(this.keys[pos] === key) {
+                        this.values[pos] = value
+                        break
+                    }
+                }
+                console.log(i)
+                return i + 1
+            }
+
+            get(key) {
+                var result
+                var initPos = this._hash(key)
+                var pos
+                for(var i = 0; ; i++) {
+                    pos = (initPos + this._rehash(i)) % this.size
+                    if(this.keys[pos] === undefined) {
+                        result = undefined
+                        break
+                    } else if(this.keys[pos] === key) {
+                        result = this.values[pos]
+                        break
+                    }
+                }
+                return result
+            }
+        }
+        var h = new HashMap(997)
+        var time = 0
+        var tests = 5000
+        for(var i = 0; i < tests; i++) {
+            var key = Math.random().toString(16).substr(2, 5)
+            var value = i
+            time += h.set(key, value)
+        }
+        console.log(time, time / tests)
+    </script>
+</body>
+</html>
