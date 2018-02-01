@@ -33,6 +33,7 @@
 
         function ajax(method, url, header, data, callback) {
             var xhr = new XMLHttpRequest()
+
             xhr.open(method, url, true)
 
             xhr.setRequestHeader(header)
@@ -49,8 +50,17 @@
             } else {
                 xhr.send(JSON.stringify(data))
             }
-            xhr.send(null)
         }
+
+        ajax('get', '/a.json', {
+            foo: 'bar',
+            'Content-Type': 'application/json'
+        }, {
+            name: 'xxx',
+            password: 'xxx',
+        }, function(data) {
+
+        })
 
 
 
