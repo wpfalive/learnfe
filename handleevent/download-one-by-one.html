@@ -1,7 +1,7 @@
 <script src="imgs.js"></script>
 <script>
   var log = console.log
-  imgs.splice(18)
+  imgs.splice(17)
 
   // 下载给定url的图片，下载完成后调用callback
   function downloadImg(url, callback) {
@@ -21,11 +21,10 @@
     xhr.send()
   }
 
-  function downloadImgAsync(img, done) {
-    var xhr = new XMLHttpRequest()
-    xhr.addEventListener("load", done)
-    xhr.open('GET', img, true)
-    xhr.send()
+  function together() {
+    for(var i = 0; i < imgs.length; i++) {
+      downloadImg(imgs[i])
+    }
   }
 
   //一张一张下
@@ -35,86 +34,94 @@
     }
   }
 
-  function twoByTwo(imgs, done) {
-    var total = 0
-    var counter = 2;
-    (function twoByTwoHelper(imgs,
-      done) {
-      if(total >= imgs.length - 1) {
-        return
-      }
-      downloadImgAsync(imgs[total], () => {
-        log(1, Date.now(), total)
-        counter--
-        total++
-        if(counter > 0) {
-          twoByTwoHelper(imgs)
-        } else if(counter === 0) {
-          counter = 2
-        }
-      })
-      downloadImgAsync(imgs[total], () => {
-        log(2, Date.now(), total)
-        counter--
-        total++
-        if(counter > 0) {
-          twoByTwoHelper(imgs)
-        } else if(counter === 0) {
-          counter = 2
-        }
-      })
-    })(imgs)
-  }
-
-  function twoByTwo2(imgs, done) {
-    function *countTwo() {
-    for(var i = 0; i < imgs.length; i++) {
-        yield imgs[i]
-      }
+  //最多只能同时有两张正在下载
+  function twoMax(imgs, total=0, curIndex=0) {
+    var len = imgs.length
+    if(total > len) {
+      return
     }
 
-    var two = countTwo()
-    
-    var img = two.next().value
-
-    downloadImg(img, twoByTwo)
-  }
-
-
-  //两张一组，两张都下完以后再开始下一组
-  function twoByTwo22222(imgs, done) {
-    var twocount = 0
-    var one = true
-    var two = true
-    //for循环结束才会执行异步函数，因此这个代码会死循环
-    for(var i = 0; i < imgs.length; ) {
-      if(one && two) {
-        one = false
-        two = false
-        downloadImg(imgs[i], () => {
-          one = true
+    var number = 0
+    for(let i = 0; i < 2; i++) {
+      total += 1
+      //last img
+      if(total === len) {
+        downloadImg(imgs[len -1], log)
+      } else {
+        downloadImg(imgs[curIndex++], () => {
+          number += 1
+          if(number >= 2) {
+            twoMax(imgs, total, curIndex)
+            number = 0
+          }
         })
-        downloadImg(imgs[i+1], () => {
-          two = true
-        })
-        i += 2
       }
     }
   }
 
   //两张一组，两张任何一张都下完以后就开始下一组
-  function twoByTwo2(imgs, done) {
-    
+  function twoByTwo(imgs, total=0, curIndex=0) {
+    var len = imgs.length
+    if(total > len) {
+      return
+    }
+    var number = 0
+    for(let i = 0; i < 2; i++) {
+      total += 1
+      downloadImg(imgs[curIndex++], () => {
+        number += 1
+        if(number >= 1) {
+          twoByTwo(imgs, total, curIndex)
+          number = 0
+        }
+      })
+    }
   }
 
 
-  //最多只能同时有两张正在下载
-  function twoMax(imgs, done) {
-    
-  }
+  //两张一组，两张都下完以后再开始下一组
+  // function twoByTwo2(imgs, done) {
+  //   var twocount = 0
+  //   var one = true
+  //   var two = true
+  //   //for循环结束才会执行异步函数，因此这个代码会死循环
+  //   for(var i = 0; i < imgs.length; ) {
+  //     if(one && two) {
+  //       one = false
+  //       two = false
+  //       downloadImg(imgs[i], () => {
+  //         one = true
+  //       })
+  //       downloadImg(imgs[i+1], () => {
+  //         two = true
+  //       })
+  //       i += 2
+  //     }
+  //   }
+  // }
 
   //最多同时下载n张
-  function nMax(n, imgs, done) {
-    
+  function nMax(n, imgs, total=0, curIndex=0) {
+    var len = imgs.length
+    if(total > len) {
+      return
+    }
+
+    var number = 0
+    for(let i = 0; i < n; i++) {
+      total += 1
+      //last img
+      if(total === len) {
+        downloadImg(imgs[len - 1], log)
+      } else {
+        downloadImg(imgs[curIndex++], () => {
+          number += 1
+          if(number >= n) {
+            nMax(n, imgs, total, curIndex)
+            number = 0
+          }
+        })
+      }
+    }
   }
 </script>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getCollectionWeight</title>
+</head>
+<body>
+    <script>
+    /*
+    * 想象一个场景：一个函数需要返回一个数组、map或者普通对象的“重量”。“重量”由属性值计算得到。规则如下：
+    * null 或者 undefined 计为 1
+    * 基础类型的数据计为 2
+    * 对象或者函数类型的数据计为 4
+    * 举个例子：数组 [null, 'Hello World', {}] 的重量计算为： 1(null) + 2(字符串类型) + 4(对象) = 7
+     */
+    /*typeof 和instanceof*/
+    var log = console.log
+     function getCollectionWeight(collection) {
+        const WEIGHT_NULL_UNDEFINED = 1
+        const WEIGHT_PRIMITIVE = 2
+        const WEIGHT_OBJ_FUNC = 4
+        let collectionValues
+        if(collection instanceof Array) {
+            collectionValues = collection
+        } else if(collection instanceof Map) {
+            collectionValues = [...collection.values()]
+        } else {
+            collectionValues = Object.keys(collection).map(key => {
+                return collection[key]
+            })
+        }
+        return collectionValues.reduce((sum, it) => {
+            if(it === null) {
+                return sum += WEIGHT_NULL_UNDEFINED
+            } else if(typeof it === 'object' || typeof it === 'function') {
+                return sum += WEIGHT_OBJ_FUNC
+            } else {
+                return sum += WEIGHT_PRIMITIVE
+            }
+        }, 0)
+     }
+
+     // let myArray = [null, {}, 15]
+     // let myMap = new Map([["name", "wpf"],["functionKey", function() {}] ])
+     // let myObj = {stringKey: "Hello, World"}
+     // log(getCollectionWeight(myArray))
+     // log(getCollectionWeight(myMap))
+     // log(getCollectionWeight(myObj))
+     function getWeightByType(value) {
+        const WEIGHT_NULL_UNDEFINED = 1
+        const WEIGHT_PRIMITIVE = 2
+        const WEIGHT_OBJ_FUNC = 4
+        if(value === null) {
+            return WEIGHT_NULL_UNDEFINED
+        } else if(typeof value === 'object' || typeof value === 'function') {
+            return WEIGHT_OBJ_FUNC
+        } else {
+            return WEIGHT_PRIMITIVE
+        }
+     }
+
+     function getMapValues(map) {
+        return [...map.values()]
+     }
+
+     function getPlainObjectValues(obj) {
+        return Object.keys(obj).map(key => {
+            return obj[key]
+        })
+     }
+
+     function getCollectionValues(collection) {
+        if(collection instanceof Array) {
+            return collection
+        } else if(collection instanceof Map) {
+            return getMapValues(collection)
+        }
+
+        return getPlainObjectValues(collection)
+     }
+
+     function reduceWeightSum(sum, item) {
+        return sum += getWeightByType(item)
+     }
+
+     function getCollectionWeight2(collection) {
+        return getCollectionValues(collection).reduce(reduceWeightSum, 0)
+     }
+
+     let myArray = [null, {}, 15]
+     let myMap = new Map([["name", [1,2,3]], ["functionKey", function() {}] ])
+     let myObj = {stringKey: "Hello, World"}
+     log(getCollectionWeight(myArray))
+     log(getCollectionWeight(myMap))
+     log(getCollectionWeight(myObj))
+
+    </script>
+</body>
+</html>

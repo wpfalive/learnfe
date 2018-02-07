@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>evaluatingData</title>
+    <style>
+        span {
+            display: block;
+            max-width: 200;
+        }
+        textarea {
+            font-size: 1em;
+        }
+        .output {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        .code-wrapper {
+            width: 230px; 
+            height: 200px;
+            background: #abc;
+        }
+        .code {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <textarea autofocus name="" id="" cols="30" rows="10">var a = 1, b = 2; return a + b + c</textarea>
+    <input type="button" value="run">
+    
+    <div class="code-wrapper">
+        <div class="code"></div>
+    </div>
+    <span class="output"></span>
+    <span class="result"></span>
+
+    <script>
+        /*
+        var a = 1, b = 2; return a + b
+        console.log(1111)
+
+         */
+        // var log = console.log
+        // 另外的变量指向eval
+        // var golbalEval = eval
+        // golbalEval(1 + 2)
+        var textarea = document.querySelector("textarea")
+        var run = document.querySelector("input")
+        var span_result = document.querySelector(".result")
+        var span_output = document.querySelector(".output")
+        var container = document.querySelector(".code")
+        console.oldLog = console.log
+        var logContent = ""
+
+        console.log = function(value) {
+            console.oldLog(value)
+            logContent = value
+        }
+
+        function printCode(code) {
+            container.innerHTML = code
+        }
+
+        function printLog(value) {
+            if(value) {
+                span_output.textContent = "output: " + value + "\r\n"
+            }
+        }
+
+        function printResult(value) {
+            span_result.textContent = "return: " + value
+        }
+
+        function runCode(code) {
+            var result
+            try {
+                span_result.classList.remove("error")
+                result = (new Function(code)).call()
+            } catch(e) {
+                span_result.classList.add("error")
+                result = e
+            }
+            return result
+        }
+
+        run.addEventListener("click", function() {
+            var code = textarea.value
+            var result = runCode(code)
+            printCode(code)
+            printLog(logContent)
+            printResult(result)
+        })
+
+    </script>
+</body>

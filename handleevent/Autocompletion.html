@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autocompletion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+        }
+        .engine-key-wrapper {
+            flex: 1;
+            flex-direction: column;
+            max-width: 448px;
+            height: 50px;
+            position: relative;
+            border: 1px solid #029ae5;
+            margin: 300px auto;
+        }
+        .search-key {
+            width: 430px;
+            border: 0;
+            outline: 0; /*border外的一层边,outline不影响margin*/
+            line-height: 16px;
+            padding: 12px 0 10px 10px;
+            font-size: 1em;
+        }
+        ul li {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .engine-hint-list {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            line-height: 27px;
+            font-size: 12px;
+            background: #fff;
+        }
+        .engine-hint-list li {
+            text-indent: 10px;
+            cursor: pointer;
+        }
+        .engine-hint-list li:hover {
+            background: #ccc;
+        }
+        .engine-title-wrapper {
+            margin: 200px auto;
+            text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="engine-title-wrapper">
+        <div class="engine-title">鹏飞搜索</div>
+    </div>
+    <div class="engine-key-wrapper">
+        <input type="text" class="search-key" id="search-key" value="" autofocus>
+        <div id="engine-tip-show" class="engine-hint-list engine-tip-list" style="display: none;">
+            <!-- <ul>
+                <li>
+                    <span>我的订单</span>
+                </li>
+                <li>
+                    <span>韦达定理</span>   
+                </li>
+                <li>
+                    <span>雾都</span>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+
+    <script>
+        /*Extend a text  eld so that when the user types, a list of suggested values is shown below the  eld. You have an array of possible values available and should show those that start with the text that was typed. When a suggestion is clicked, replace the text  eld’s current value with it.*/
+        var log = console.log
+        var possibleText = ["major", "match", "milk", "metal", "math", "mkdir", "mkt", "muscle"]
+        var inputs = document.querySelectorAll("input")
+        var firstInput = inputs[0]
+
+        function loadText(texts) {
+
+            var ul = document.createElement("ul")
+            texts.forEach(it => {
+                var li = document.createElement("li")
+                li.textContent = it
+                ul.appendChild(li)
+            })
+            return ul
+        }
+
+        /*在火狐下面有个bug，页面加载两秒钟后是去焦点*/
+        /*display: none和display:hidden是什么区别*/
+        firstInput.addEventListener("input", event => {
+            var val = event.target.value
+            var tipList = document.querySelector(".engine-tip-list")
+            tipList.style.display = "block"
+            var oldUl = document.querySelector("ul")
+            if(oldUl) {
+                tipList.removeChild(oldUl)
+            }
+            var compatibleText = possibleText.filter(it => it.indexOf(val) != -1)
+            var newUl = loadText(compatibleText)
+            tipList.appendChild(newUl)
+            console.log(tipList)
+        })
+
+        firstInput.addEventListener("blur", event => {
+            var tipList = document.querySelector(".engine-tip-list")
+            tipList.style.display = "none"
+        })
+    </script>
+</body>
+</html>

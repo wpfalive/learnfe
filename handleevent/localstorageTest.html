@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>localstorage</title>
+    <!-- <link rel="stylesheet" href="a.css"> -->
+</head>
+<body>
+    <h1>it works</h1>
+    <script>
+        function get(url, callback) {
+            var xhr = new XMLHttpRequest()
+            xhr.open("GET", url)
+            xhr.addEventListener("load", function() {
+                callback(xhr.responseText)
+            })
+            xhr.send()
+        }
+
+        function saveResource(url, content) {
+            localStorage['local_resource_' + url] = content
+        }
+
+        function applyResource(url) {
+            var resContent = localStorage['local_resource_' + url]
+            var node
+
+            if(url.includes(".css")) {
+                node = document.createElement('style')
+            } else if(url.includes(".js")) {
+                node = document.createElement("script")
+            }
+            node.textContent = resContent
+            document.head.appendChild(node)
+        }
+
+        function loadResource(url) {
+            if(localStorage['local_resource_' + url]) {
+                applyResource(url)
+            } else {
+                get(url, function(resContent) {
+                    saveResource(url, resContent)
+                    applyResource(url)
+                })
+            }
+        }
+
+        loadResource("a.css")
+        loadResource("b.css")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
