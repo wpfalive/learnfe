@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var log = console.log
+        var pattern = new RegExp("\\[bc\\]at", "gi")
+        log(pattern.toString()) // /\[bc\]at/
+        log(pattern.toLocaleString()) // \[bc\]at
+        log(pattern.valueOf()) // 
+        log(pattern.valueOf().test("[bc]at"))
+    </script>
+</body>
+</html>

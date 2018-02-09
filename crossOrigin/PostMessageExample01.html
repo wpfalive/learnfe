@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Parent</title>
+</head>
+<body>
+    <script>
+        //create popup window
+        var domain = 'http://127.0.0.1:5500/crossOrigin'
+        var myPopup = window.open(domain + '/PostMessageExample02.html', 'myWindow');
+
+        //periodical message sender
+        setInterval(function () {
+            var message = 'Hello1234!  The time is: ' + (new Date().getTime());
+            console.log('blog.local:  sending message:  ' + message);
+            myPopup.postMessage(message, domain); //send the message and target URI
+        }, 6000);
+
+        //listen to holla back
+        window.addEventListener('message', function (event) {
+            console.log(event.origin)
+            if (event.origin !== domain) return;
+            console.log('received response:  ', event.data);
+        }, false);
+    </script>
+</body>
+</html>

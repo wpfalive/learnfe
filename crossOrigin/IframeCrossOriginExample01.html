@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        iframe:nth-child(3) {
+            height: 400px;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <iframe src="https://www.w3schools.com" frameborder="0"></iframe>-->
+    <iframe src="https://www.zhihu.com" frameborder="0" id="zhihu"></iframe> 
+    <iframe src="http://www.sina.com" frameborder="0" id="sina"></iframe>
+    <script>
+        var sina = document.getElementById("sina")
+        consolo.log(sina.cookie)
+        // var zhihu = document.getElementById("zhihu").contentWindow.document
+        // console.log(1, zhihu)
+        var content = sina.contentWindow.document
+        console.log(sina, content)
+    </script>
+</body>
+</html>

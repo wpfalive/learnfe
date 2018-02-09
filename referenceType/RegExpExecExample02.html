@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var log = console.log
+        var text = "cat, bat, sat, fat"
+        var pattern1 = /.at/
+
+        var matches = pattern1.exec(text)
+        // log(matches.index)
+        // log(matches[0])
+        // log(pattern1.lastIndex)
+
+        // var matches = pattern1.exec(text)
+        // log(matches.index)
+        // log(matches[0])
+        // log(pattern1.lastIndex)
+
+        // var matches = pattern1.exec(text)
+        // log(matches.index)
+        // log(matches[0])
+        // log(pattern1.lastIndex)
+        var pattern2 = /.at/g
+        var matches = pattern2.exec(text)
+        log(matches.index)
+        log(matches[0])
+        log(pattern2.lastIndex)
+
+        var matches = pattern2.exec(text)
+        log(matches.index)
+        log(matches[0])
+        log(pattern2.lastIndex)
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<script src="imgs.js"></script>
+<script>
+var log = console.log
+imgs.splice(17)
+
+// 下载给定url的图片，下载完成后调用callback
+function downloadImg(url, callback) {
+    var img = new Image()//document.create('img')
+    img.onload = function(){
+      callback(img)
+    }
+    img.onerror = function(){
+      callback(img)
+    }
+    img.src = url
+}
+
+  //一张一张下
+function oneByOne(imgs, done) {
+    var i = 0
+    function d() {
+        if(i === imgs.length) {
+            done()
+            return 
+        }
+        downloadImg(imgs[i], function() {
+            i += 1
+            d()
+        })
+    }
+    d()
+}
+
+//最多只能同时有两张正在下载
+function twoMax(imgs, done) {
+
+}
+
+//两张一组，两张任何一张都下完以后就开始下一组
+function twoByTwo(imgs, done) {
+}
+
+//最多同时下载n张
+function nMax(imgs, done) {
+
+}
+</script>

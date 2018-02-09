@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script> 
+        function displayInfo(args) {
+            var output = ""
+            if(typeof args.name === "string") {
+                output += "Name: " + person.name
+            }
+            if(typeof args.age === "number") {
+                output += "Age: " + args.age
+            }
+
+            console.log(output)
+        }
+
+        var person = {
+            name: "Frank",
+            age: 29
+        }
+
+        //displayInfo(person)
+        displayInfo({
+            name: "Greg"
+        })
+
+        
+    </script>
+</body>
+</html>

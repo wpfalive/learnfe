@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var colors = ["red", "green", "blue"]
+        var removed = colors.splice(0, 1)
+        // console.log(colors) //green, blue
+        // console.log(removed) //red
+        // 
+        removed = colors.splice(1, 0, "yellow", "orange")
+        // console.log(colors) //green, yellow, orange, blue
+        // console.log(removed) //没有删除任何项，返回空数组
+
+        removed = colors.splice(1, 1, "red", "purple")
+        console.log(colors) //green, red, purple, orange, blue
+        console.log(removed) //yellow
+
+        console.log([].splice(1, 1))
+
+    </script>
+</body>
+</html>

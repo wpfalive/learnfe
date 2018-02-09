@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var text = "there has been a short summer"
+        var pattern = /(..)or(.)/g
+        if(pattern.test(text)) {
+            console.log(RegExp.$1) //sh
+            console.log(RegExp.$2) //t
+        }
+    </script>
+</body>
+</html>

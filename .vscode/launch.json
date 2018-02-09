@@ -8,8 +8,17 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        }
+            "url": "http://localhost:8080/learnfe/hash.html",
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}/learnfe"
+        },
+        {
+            "name": "attach hash.html (enable sourcemaps)",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}/hash.html"
+        },
     ]
 }

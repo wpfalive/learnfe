@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var numbers = [1,2,3,4,5,4,3,2,1]
+        var everyResult = numbers.every((item, index, ary) => {
+            return item > 2
+        })
+        // console.log(everyResult)
+        var someResult = numbers.some((item, index, ary) => {
+            return item > 2
+        })
+        // console.log(someResult)
+        var filterResult = numbers.filter((item, index, ary) => {
+            return item > 2
+        })
+        // console.log(filterResult)
+        var mapResult = numbers.map((item, index, ary) => {
+            return item * 2
+        })
+        // console.log(mapResult)
+        var sum = numbers.reduce((prev, cur, index, ary) => {
+            // console.log(prev)
+            return prev + cur
+        })
+        console.log(sum)
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>title1</title>
+</head>
+
+<body>
+    <iframe src="" frameborder="0" id="myIFrame"></iframe>
+    <script>
+        //respond to events
+        console.log("abc")
+            window.addEventListener('message', function (event) {
+                //if (event.origin !== 'http://127.0.0.1:5500') return;
+                console.log('message received:  ' + event.data, event);
+                event.source.postMessage('holla back youngin!', event.origin);
+            }, false);
+    </script>
+</body>
+
+</html>
