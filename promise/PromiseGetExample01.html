@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function get(url) {
+            return new Promise(function(succeed, fail) {
+                var xhr = new XMLHttpRequest(url)
+                xhr.open("GET", url, true) //true refers to async
+                xhr.addEventListener("load", function() {
+                    if(xhr.status < 400) {
+                        succeed(xhr.responseText)
+                    } else {
+                        fail(new Error("Request failed:" + xhr.statusText))
+                    }
+                })
+                xhr.addEventListener("error", function () {
+                    fail(new Error("Network error"))
+                })
+                xhr.send(null)
+            })
+        }
+
+        function getJSON(url) {
+            return get(url).then(JSON.parse)
+        }
+
+        // get("http://eloquentjavascript.net/example/bert.json").then(function(text) {
+        //    console.log("data.txt: " + text)
+        // }, function(error) {
+        //     console.log("Failed to fetch data.txt: " + error)
+        // })
+
+        function showMessage(msg) {
+            var elt = document.createElement("div")
+            elt.textContent = msg
+            debugger;
+            return document.body.appendChild(elt)
+        }
+
+        var loading = showMessage("Loading...")
+        var domain = "http://eloquentjavascript.net/"
+        getJSON(domain + "example/bert.json")
+            .then(function(bert) {
+                return getJSON(domain + bert.spouse)
+            }).then(function (spouse) {
+                return getJSON(domain + spouse.mother)
+            }).then(function (mother) {
+                showMessage("The name is " + mother.name)
+            }).catch(function (error) {
+                showMessage(String(error))
+            }).then(function() {
+                console.log("end")
+                document.body.removeChild(loading)
+            })
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var isMomHappy = true
+
+        var willIGetNewPhone = new Promise(
+            function (resolve, reject) {
+                if(isMomHappy) {
+                    var phone = {
+                        brand: "Samsung",
+                        color: "black"
+                    }
+                    resolve(phone)
+                } else {
+                    var reason = new Error('mom is not happy')
+                    reject(reason)
+                }
+            }
+        )
+        // call our promise
+        var askMom = function () {
+            console.log('before asking Mom'); // log before
+            willIGetNewPhone
+            
+                .then(function (fulfilled) {
+                    console.log(fulfilled);
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                })
+                .then(showOff)
+            console.log('after asking mom'); // log after
+        }
+        
+        // var showOff = function (phone) {
+        //     return new Promise(
+        //         function (resolve, reject) {
+        //             var message = 'Hey friend, I have a new ' +
+        //                 phone.color + ' ' + phone.brand + ' phone';
+
+        //             resolve(message);
+        //         }
+        //     );
+        // };
+        // var showOff = function(phone) {
+        //     return new Promise(
+        //         function (resolve, reject) {
+        //             var message = 'Hey friend, I have a new ' + 
+        //                 phone.color + ' ' + phone.brand + ' phone.'
+                    
+        //             resolve(phone)
+        //         }
+        //     )
+        // }
+
+        var showOff = function (phone) {
+            var message = 'Hey friend, I have a new ' +
+                phone.color + ' ' + phone.brand + ' phone';
+
+            return Promise.resolve(message);
+        };
+
+        askMom()
+    </script>
+</body>
+</html>

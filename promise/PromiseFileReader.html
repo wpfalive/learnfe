@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function readFile(file) {
+            return new Promise(function (succeed, fail) {
+                var reader = new FileReader()
+                reader.addEventListener("load", function () {
+                    
+                })
+                reader.addEventListener("error", function () {
+                    
+                })
+                var status = reader.readAsText(file)
+                
+            })
+            
+            reader.addEventListener("load", function () {
+                console.log(file.name)
+            })
+            reader.readAsText(file)
+        }
+
+        function delay(duration) {
+            //promise一旦创建，函数就开始执行了
+            return new Promise(function(resolve, reject) {
+                setTimeout(resolve, duration)
+            })
+        }
+
+        //then 就算事件已经发生，还是可以挂个事件让then里的函数执行
+        var domready = new Promise(function(resolve, reject) {
+            if(document.readyState === 'completed') {
+                resolve()
+            } else {
+                document.addEventListener("DOMContentLoaded", function () {
+                    resoleve()
+                })
+                document.addEventListener("readystatechange", function (e) {
+                    if (document.readyState === 'completed') {
+                        resolve()
+                    }
+                })
+                document.addEventListener("load")
+            }
+        })
+
+        Promise.defered = function(resolve, reject, ) {
+            return new Promise(function() {
+                
+            })
+        }
+
+        Promise.all = function(promises) {
+            var results = new Array(promises.length)
+            
+            return promises.every(it => {
+                it.then().catch()
+            })
+        }
+
+        Promise.race = function () {
+            return new Promise(function (resolve, reject) {
+                promises.forEach(promise => {
+                    promise.then(resolve, reject)
+                })
+            })
+        }
+    </script>
+</body>
+</html>
