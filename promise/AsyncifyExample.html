@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function asyncify(fn) {
+            var orig_fn = fn
+            var intv = setTimeout(() => {
+                intv = null
+                if(fn) {
+                    fn()
+                }
+            }, 0)
+            fn = null
+            return function () {
+                if(intv) {
+                    fn = orig_fn.bind.apply(
+                        orig_fn, [this].concat([].slice.call(arguments))
+                    )
+                }
+                else {
+                    orig_fn.apply(this, arguments)
+                }
+            }
+        }
+
+        function result() {
+            console.log(a)
+        }
+        var a = 0
+        ajax("..pre-cached-url..", asyncify(result))
+        a += 1
+    </script>
+</body>
+</html>

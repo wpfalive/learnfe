@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+        var req1 = new Promise(function(resolve, reject) {
+            setTimeout(() => {
+                console.log(resolve)
+                resolve('First')
+            }, 4000);
+        })
+        var req2 = new Promise(function (resolve, reject) {
+            setTimeout(() => {
+                reject("Second")
+            }, 3000);
+        })
+        Promise.all([req1, req2]).then(function(results) {
+            console.log('Then: ', results)
+        })
+        .catch(function (err) {
+            console.log("Catch: ", err)
+        })
+    </script>
+</body>
+</html>

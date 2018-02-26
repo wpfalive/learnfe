@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>select component</title>
+    <style>
+        .select-js {
+            position: relative;
+            display: inline-block;
+            border: 1px solid;
+            min-width: 100px;
+        }
+        .select-js > ul {
+            display: none;
+            position: absolute;
+            margin-top: 0;
+            padding: 0;
+            list-style: none;
+            top: 100%;
+            left: 0;
+            background: white;
+            width: 100%;
+        }
+        .select-js > ul > li:not(:last-child) {
+            border-bottom: 1px dotted;
+        }
+    </style>
+</head>
+<body>
+    <select id="select">
+        <option value="1">a</option>
+        <option value="2">b</option>
+        <option value="3">c</option>
+    </select>
+    <script>
+        class Select {
+            constructor({el}) {
+                this.el = el
+                //el.style.display = 'none'
+                var currentVal = select.value
+                var wrapper = document.createElement('div')
+                wrapper.innerHTML = `
+                    <div class='select-js'>
+                        <span>${currentVal}</span>
+                        <ul style="display: none;">
+                            ${
+                                Array.from(el.options).map(op => {
+                                    return `<li data-value="${op.value}">${op.innerText}</li>`
+                                }).join('')
+                            }
+                        </ul>
+                    </div>
+                `
+                // debugger
+                this.mainElement = wrapper.firstElementChild
+                this.span = this.mainElement.firstElementChild
+                this.dropdown = this.mainElement.querySelector('ul')
+
+                // 这句话没有内容，因为ul没有加到页面中，但是已经在wrapper中了
+                // document.querySelector('ul')
+
+                el.parentNode.insertBefore(wrapper.firstElementChild, el)
+
+                this._initEvents()
+
+            }
+
+            _initEvents() {
+                this.span.addEventListener('click', () => {
+                    this.toggle()
+                })
+                this.dropdown.addEventListener('click', event => {
+                    var li = event.target
+                    var val = li.dataset.value
+                    this.change(val)
+                    this.close()
+                })
+            }
+
+            open() {
+                this.dropdown.style.display = 'block'
+            }
+
+            close() {
+                this.dropdown.style.display = 'none'
+            }
+
+            toggle() {
+                if(this.dropdown.style.display === 'none') {
+                    this.open()
+                } else {
+                    this.close()
+                }
+            }
+
+            isOpen() {
+                return this.dropdown.style.display === 'block'
+            }
+            change(val) {
+                this.span.innerText = val
+                this.el.value = val
+            }
+            update() {
+
+            }
+        }
+    </script>
+    <script>
+        new Select({
+            el: document.querySelector('#select')
+        })
+    </script>
+</body>
+</html>

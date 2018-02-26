@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            counter-reset: left-count;
+        }
+        li:not(.todo-done) {
+            counter-increment: left-count;
+        }
+        #leftCount:before {
+            content: counter(left-count);
+        }
+        .todo-delete {
+            display: none;
+            float: right;
+        }
+        li.editing.editing.editing .todo-delete {
+            display: none;
+        }
+
+        li.todo:hover .todo-delete {
+            display: inline-block;
+        }
+        .todo-edit {
+            display: none;
+        }
+        li.editing .todo-edit {
+            display: inline-block;
+        }
+        /*display none是否占用元素位置
+            https://stackoverflow.com/questions/133051/what-is-the-difference-between-visibilityhidden-and-displaynone
+            display none 表示标签不会出现在页面中(但还是可以通过dom来操作不显示的元素)页面将不会为这个元素预留空间
+            display hidden 标签不可见，但是页面空间还是分配了。元素被重新渲染，只是在页面上看不见。
+
+        */
+        li.editing span {
+            display: none;
+        }
+        .todo-done {
+            text-decoration: line-through;
+        }
+        
+        
+
+
+    </style>
+</head>
+<body>
+    <div>
+        <header>
+           <input type="checkbox" id="toggleSelectAll">
+            <input type="text" id="todoInput" placeholder="enter sth">
+        </header>
+        <ul id="todos">
+            
+        </ul>
+        <footer>
+            <span>
+                <span id="leftCount"></span> item(s) left
+            </span>
+        </footer>
+    </div>
+    <script>
+        var log = console.log
+        var todoInput = document.querySelector('#todoInput')
+        var todos = document.querySelector('#todos')
+        var toggleSelectAll = document.querySelector('#toggleSelectAll')
+
+        function updateCount() {
+            return
+
+            var leftCount = document.querySelector('#leftCount')
+
+            var checks = Array.from(todos.querySelectorAll('input[type="checkbox"]'))
+            leftCount.textContent =  checks.filter(it => {
+                return it.checked !== true
+            }).length
+        }
+
+        //更新删除线
+        toggleSelectAll.addEventListener('click', event => {
+            // var checks = Array.from(todos.querySelectorAll('input[type="checkbox"]'))
+            // if(this.checked) {
+            //     checks.forEach(it => it.checked = true)
+            //     checks.map(it => it.parentNode).forEach(li => {
+            //         li.classList.add('todo-done')
+            //     })
+            // } else {
+            //     checks.forEach(it => it.checked = false)
+            //     checks.map(it => it.parentNode).forEach(li => {
+            //         li.classList.remove('todo-done')
+            //     })
+            // }
+            
+            var checks = todos.querySelectorAll('input[type="checkbox"]')
+            Array.from(checks).forEach(item => {
+                item.checked = toggleSelectAll.checked
+                if(toggleSelectAll.checked) {
+
+                    item.parentNode.classList.add('todo-done')
+                } else {
+                    // item.parentNode选中li
+                    // 这种做法是不好的，代码不要跟dom结构绑定
+                    // jquery做法 找到元素特定类型的祖先
+                    item.parentNode.classList.remove('todo-done')
+                }
+            })
+            updateCount()
+        })
+
+        function addItem() {
+            if(todoInput.value.trim() === '') {
+                return
+            }
+            toggleSelectAll.checked = false
+            var li = document.createElement('li')
+            li.classList.add('todo')
+
+            var todoDone = document.createElement('input')
+            todoDone.type = 'checkbox'
+            todoDone.addEventListener('click', event => {
+                var checks = todos.querySelectorAll('input[type="checkbox"')
+                var isAllSelected = Array.from(checks).every(item => item.checked)
+
+                toggleSelectAll.checked = isAllSelected
+
+                if(todoDone.checked) {
+                    li.classList.add('todo-done')
+                } else {
+                    li.classList.remove('todo-done')
+                }
+                updateCount()
+            })
+            li.append(todoDone)
+            
+
+            var span = document.createElement('span')
+            span.textContent = todoInput.value
+            span.addEventListener('dblclick', event => {
+                li.classList.add('editing')
+                todoEdit.focus()
+            })
+            li.append(span)
+
+            //修改中如果删除了input的全部内容，则删掉这一条
+            var todoEdit = document.createElement('input')
+            todoEdit.type = 'text'
+            todoEdit.classList.add('todo-edit')
+            todoEdit.value = todoInput.value
+            todoEdit.onblur = function() {
+                li.classList.remove('editing')
+                span.textContent = this.value
+            }
+
+            li.append(todoEdit)
+
+            //技术术语，斜体等
+            //只在没有更合适的语义元素时使用i标签
+            var todoDel = document.createElement('i')
+            todoDel.classList.add("todo-delete")
+            todoDel.textContent = 'X'
+            todoDel.addEventListener('click', event => {
+                li.parentNode.removeChild(li)
+                updateCount()
+            })
+            li.append(todoDel)
+
+            todos.append(li)
+            todoInput.value = ''
+        }
+
+        todoInput.addEventListener('keydown', event => {
+            if(event.keyCode === 13) {
+                addItem(event)
+                updateCount()
+            }
+        })
+
+        todoInput.onblur = function() {
+            addItem()
+            updateCount()
+        }
+
+        onload = function() {
+            todoInput.focus()
+        }
+
+    </script>
+</body>
+</html>
