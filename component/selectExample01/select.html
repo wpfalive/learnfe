@@ -27,21 +27,45 @@
     </style>
 </head>
 <body>
-    <select id="select">
+    <select>
         <option value="1">a</option>
         <option value="2">b</option>
         <option value="3">c</option>
     </select>
+    <select>
+        <option value="1">foo</option>
+        <option value="2">bar</option>
+        <option value="3">baz</option>
+    </select>
+    <select>
+        <option value="1">aaa</option>
+        <option value="2">bbb</option>
+        <option value="3">ccc</option>
+    </select>
+    <select>
+        <option value="1">qqq</option>
+        <option value="2">www</option>
+        <option value="3">eee</option>
+    </select>
     <script>
         class Select {
+            static init({selector}) {
+                var selects = document.querySelectorAll(selector)
+                Array.from(selects).forEach(select => {
+                    new Select({
+                        el: select
+                    })
+                })
+            }
             constructor({el}) {
                 this.el = el
-                //el.style.display = 'none'
-                var currentVal = select.value
+                this.el.selectInstance = this
+                el.style.display = 'none'
+                var currentText = el.value
                 var wrapper = document.createElement('div')
                 wrapper.innerHTML = `
                     <div class='select-js'>
-                        <span>${currentVal}</span>
+                        <span>${currentText}</span>
                         <ul style="display: none;">
                             ${
                                 Array.from(el.options).map(op => {
@@ -59,7 +83,7 @@
                 // 这句话没有内容，因为ul没有加到页面中，但是已经在wrapper中了
                 // document.querySelector('ul')
 
-                el.parentNode.insertBefore(wrapper.firstElementChild, el)
+                el.parentNode.insertBefore(this.mainElement, el)
 
                 this._initEvents()
 
@@ -74,6 +98,12 @@
                     var val = li.dataset.value
                     this.change(val)
                     this.close()
+                })
+                // 如果动态地给select添加了一个option, 也要同步到组件中
+                // 动态用代码改变this.el值的时候，是不会触发chang事件的
+                // 需要主动调用update来更新组件的值
+                this.el.addEventListener('change', () => {
+                    this.change(this.el.value)
                 })
             }
 
@@ -92,22 +122,32 @@
                     this.close()
                 }
             }
-
             isOpen() {
                 return this.dropdown.style.display === 'block'
             }
             change(val) {
-                this.span.innerText = val
+                var opText = Array.from(this.el.options).filter(op => {
+                    return op.value === val
+                })[0].innerText
+
+                this.span.innerText = opText
                 this.el.value = val
             }
             update() {
+                this.change(this.el.value)
+            }
 
+            get value() {
+                return this.el.value
+            }
+            set value(val) {
+                this.change(val)
             }
         }
     </script>
     <script>
-        new Select({
-            el: document.querySelector('#select')
+        Select.init({
+            selector: 'select'
         })
     </script>
 </body>

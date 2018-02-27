@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function map2(ary, mapper, done) {
+            var results = []
+            var totalDoneCount = 0
+            for(let i = 0; i < ary.length; i += 1) {
+                mapper(ary[i], function(err, result) {
+                    results[i] = result
+                    totalDoneCount += 1
+                    if(totalDoneCount === ary.length) {
+                        done(null, results)
+                    }
+                })
+            }
+        }
+
+        function map(ary, mapper, done) {
+            var results = []
+            var totalDoneCount = 0
+            for(let i = 0; i < ary.length; i++) {
+                mapper(ary[i], function(err, result) {
+                    results[i] = result
+                    totalDoneCount += 1
+                    if(totalDoneCount === ary.length) {
+                        done(null, results)
+                    }
+                })
+            }
+        }
+
+        map([1,2,3], function(val, cb) {
+            setTimeout(function() {
+                cb(null, val * val)
+            })
+        }, function(err, results) {
+            // results is [1, 4, 9]
+            console.log("map3:  ",results)
+        })
+
+        function filter(ary, asyncPrediacate, done) {
+            var totalDoneCount = 0
+            var results = []
+            for(let i = 0; i < ary.length; i++) {
+                asyncPrediacate(ary[i], function(err, result) {
+                    if(result) {
+                        results[i] = result //??
+                    }
+                    totalDoneCount += 1
+                    if(totalDoneCount === ary.length) {
+                        var finalResults = []
+                        for(var index in results) {
+                            finalResults.push(results[index])
+                        }
+                        done(null, finalResults)
+                    }
+                })
+            }
+        }
+
+        function filter2(ary, asyncPrediacate, done) {
+            var results = []
+            var totalDoneCount = 0
+            for(let i = 0; i < ary.length; i++) {
+                asyncPrediacate(ary[i], function(err, result) {
+                    if(result) {
+                        results[i] = result
+                    }
+                    totalDoneCount += 1
+                    if(totalDoneCount === ary.length) {
+                        var fullAry = results.filter(it => it != null)
+                        done(null, fullAry)
+                    }
+                })
+            }
+        }
+
+        //中间的参数 处理每一项，然后对每一项有个回调
+        filter2([1,2,3,4,5], function(val, cb) {
+            setTimeout(function() {
+                if(val % 2 == 1) {
+                    cb(null, true)
+                } else {
+                    cb(null, false)
+                }
+            }, 1000)
+        }, function(error, results) {
+            console.log(results)
+        })
+
+        function parallel(tasks, allDoneCallback) {
+            var results = []
+            var totalDoneCount = 0
+            for(let i = 0; i < tasks.length; i++) {
+                tasks[i](function(err, result) {
+                    totalDoneCount += 1
+                    results[i] = result
+                    if(totalDoneCount === tasks.length) {
+                        allDoneCallback(null, results)
+                    }
+                })
+            }
+        }
+
+        function parallel2(tasks, allDoneCallback) {
+            var totalDoneCount = 0
+            var results = []
+            for(let i = 0; i < tasks.length; i++) {
+                tasks[i].call(null, function(err, result) {
+                    results[i] = result
+                    totalDoneCount += 1
+                    if(totalDoneCount === tasks.length) {
+                        allDoneCallback(null, results)
+                    }
+                })
+            }
+        }
+
+        parallel2([
+            function(callback) {
+                callback(null, 5)
+            },
+            function(callback) {
+                setTimeout(function() {
+                    callback(null, 15)
+                }, 1000)
+            }
+        ], function(err, results) {
+            console.log(results)
+        })
+
+
+
+        // 串行
+        function series(tasks, allDoneCallback) {
+            var results = []
+            var i = 0
+            run()
+            function run() {
+                tasks[i].call(null, function(err, result) {
+                    results.push(result)
+                    i += 1
+                    if(i === tasks.length) {
+                        allDoneCallback(null, results)
+                    } else {
+                        run()
+                    }
+                })
+            }
+        }
+
+        series([
+            function(callback) {
+                setTimeout(function() {
+                    callback(null, 5)
+                }, 5000)
+            },
+            function(callback) {
+                setTimeout(function() {
+                    callback(null, 15)
+                }, 1000)
+            }
+        ], function(err, results) {
+            console.log(results)
+        })
+
+        async.parallel([
+            // 两个并行的任务，内部分别执行串行任务
+            function(cb) {
+                async.series([
+                    function(cb) {
+                        setTimeout(function() {
+                            console.log(1)
+                            cb(null)
+                        }, 1000)
+                    }, 
+                    function(cb) {
+                        setTimeout(function() {
+                            console.log(2)
+                            cb(null)
+                        }, 1000)
+                    }
+                ], cb)
+            },
+            function(cb) {
+                async.series([
+                    function(cb) {
+                        setTimeout(function() {
+                            console.log('a')
+                            cb(null)
+                        }, 1000)
+                    }, 
+                    function(cb) {
+                         setTimeout(function() {
+                            console.log('b')
+                            cb(null)
+                        }, 1000)
+                    },
+                    function(cb) {
+                         setTimeout(function() {
+                            console.log('c')
+                            cb(null)
+                        }, 1000)
+                    }
+                ], cb)
+            }
+        ], function() {
+            console.log("all series has done")
+        })
+
+
+    </script>
+</body>
+</html>
