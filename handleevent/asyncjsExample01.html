@@ -6,6 +6,25 @@
 </head>
 <body>
     <script>
+
+        function map3(ary, mapper, done) {
+            var results = []
+            var totalDoneCount = 0
+            
+            for(var i = 0; i < ary.length; i++) {
+                (function(a) {
+                    mapper(ary[a], function(err, result) {
+                        results[a] = result
+                        console.log(results[a])
+                        totalDoneCount += 1
+                        if(totalDoneCount === ary.length) {
+                            done(null, results)
+                        }
+                    })
+                })(i)
+            }
+        }
+
         function map2(ary, mapper, done) {
             var results = []
             var totalDoneCount = 0
@@ -34,7 +53,7 @@
             }
         }
 
-        map([1,2,3], function(val, cb) {
+        map3([1,2,3], function(val, cb) {
             setTimeout(function() {
                 cb(null, val * val)
             })
@@ -43,13 +62,32 @@
             console.log("map3:  ",results)
         })
 
+        function filter3(ary, asyncPrediacate, done) {
+            var results = 0
+            var totalDoneCount = 0
+            for(let i = 0; i < ary.length; i++) {
+                asyncPrediacate(ary[i], function(err, result) {
+                    if(result) {
+                        result[i] = result
+                    }
+                    totalDoneCount += 1
+                    if(totalDoneCount === ary.length) {
+                        var cleanAry = results.forEach(it => {
+                            return it != null
+                        })
+                        done(null, cleanAry)
+                    }
+                })
+            }
+        }
+
         function filter(ary, asyncPrediacate, done) {
             var totalDoneCount = 0
             var results = []
             for(let i = 0; i < ary.length; i++) {
                 asyncPrediacate(ary[i], function(err, result) {
                     if(result) {
-                        results[i] = result //??
+                        results[i] = result
                     }
                     totalDoneCount += 1
                     if(totalDoneCount === ary.length) {
@@ -63,7 +101,7 @@
             }
         }
 
-        function filter2(ary, asyncPrediacate, done) {
+        function filter3(ary, asyncPrediacate, done) {
             var results = []
             var totalDoneCount = 0
             for(let i = 0; i < ary.length; i++) {
@@ -81,7 +119,7 @@
         }
 
         //中间的参数 处理每一项，然后对每一项有个回调
-        filter2([1,2,3,4,5], function(val, cb) {
+        filter3([1,2,3,4,5], function(val, cb) {
             setTimeout(function() {
                 if(val % 2 == 1) {
                     cb(null, true)
@@ -92,6 +130,21 @@
         }, function(error, results) {
             console.log(results)
         })
+
+        //并行
+        function parallel3(tasks, allDoneCallback) {
+            var totalDoneCount = 0
+            var results = []
+            for(let i = 0; i < tasks.length; i++) {
+                tasks[i](function(err, result) {
+                    results[i] = result
+                    totalDoneCount += 1
+                    if(totalDoneCount === tasks.length) {
+                        allDoneCallback(null, results)
+                    }
+                })
+            }
+        }
 
         function parallel(tasks, allDoneCallback) {
             var results = []
@@ -121,9 +174,9 @@
             }
         }
 
-        parallel2([
+        parallel3([
             function(callback) {
-                callback(null, 5)
+                callback(null, 6)
             },
             function(callback) {
                 setTimeout(function() {
@@ -135,6 +188,26 @@
         })
 
 
+        function series3(tasks, allDoneCallback) {
+            var i = 0
+            var results = []
+            run()
+            
+            function run() {
+                tasks[i](function(err, result) {
+                    console.log("series3: ", result)
+                    results[i] = result
+                    i += 1
+                    if(i === tasks.length) {
+                        allDoneCallback(null, results)
+                    } else {
+                        run()
+                    }
+
+                })
+                
+            }
+        }
 
         // 串行
         function series(tasks, allDoneCallback) {
@@ -154,7 +227,7 @@
             }
         }
 
-        series([
+        series3([
             function(callback) {
                 setTimeout(function() {
                     callback(null, 5)
