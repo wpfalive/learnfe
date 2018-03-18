@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        // {
+        //     "type": "node",
+        //     "request": "launch",
+        //     "name": "Launch Program",
+        //     "program": "${file}"
+        // },
+        // {
+        //     "name": "Attach Test",
+        //     "type": "node",
+        //     "protocol": "inspector",
+        //     "request": "attach",
+        //     "timeout": 10000,
+        //     "restart": true,
+        //     "port": 9229
+        // }
+    ]
+}

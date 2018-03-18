@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                background: #ccc;
+            }
+            .ct{
+                width: 500px;
+                margin: 0 auto;
+                background: pink;
+            }
+            .ct>div{
+                overflow: auto;
+            }
+            .ct .box1{
+                width: 100px;
+                height: 100px;
+                margin: 20px;
+                border: 1px solid red;
+            }
+            .ct .box2{
+                width: 100px;
+                height: 100px;
+                margin: 50px;
+                border: 1px solid blue;
+            }        
+    </style>
+</head>
+<body>
+    <div class="ct">
+        <!-- 在相邻元素的外层在嵌套一层，在box1和box2之间形成一层界限，阻止了兄弟元素之间外边距的合并 -->
+        <div>
+            <div class="box1">1</div>
+        </div>
+        <div>
+            <div class="box2">2</div>
+        </div>
+    </div>
+</body>
+</html>

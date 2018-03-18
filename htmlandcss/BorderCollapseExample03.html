@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    
+        body {
+            background: #ccc;
+        }
+    
+        .ct {
+            width: 500px;
+            margin: 0 auto;
+            background: pink;
+            overflow: auto;
+            /*或者还可以通过定位，浮动，
+                      设置display值为inline-block等来是.ct成为BFC环境*/
+        }
+    
+        .ct .box1 {
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            border: 1px solid red;
+        }
+    
+        .ct .box2 {
+            width: 100px;
+            height: 100px;
+            margin: 50px;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- 通过创造BFC的环境来消除父子元素之间的外边距的合并 -->
+    <!-- overflow:auto 或display: inline-block -->
+    <div class="ct">
+        <div class="box1">1</div>
+        <div class="box2">2</div>
+    </div>
+</body>
+</html>

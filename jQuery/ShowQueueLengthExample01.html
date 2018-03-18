@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>queue length example</title>
+    <style>
+        div {
+            margin: 3px;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 0px;
+            top: 60px;
+            background: green;
+            display: none;
+            border: 1px solid black;
+        }
+        div.newcolor {
+            background: blue;
+        }
+        p {
+            color: red;
+        }
+    </style>
+    <script src="jquery-3.3.1.js"></script>
+</head>
+<body>
+    <p>The queue length is:
+        <span></span>
+    </p>
+    <div></div>
+    <script>
+        $("#show").click(function () {
+            var n = jQuery.queue($("div")[0], "fx");
+            $("span").text("Queue length is: " + n.length);
+        });
+
+        function runIt() {
+            $("div")
+                .show("slow")
+                .animate({
+                    left: "+=200"
+                }, 2000)
+                .slideToggle(1000)
+                .slideToggle("fast")
+                .animate({
+                    left: "-=200"
+                }, 1500)
+                .hide("slow")
+                .show(1200)
+                .slideUp("normal", runIt);
+        }
+
+        runIt();
+    </script>
+</body>
+</html>

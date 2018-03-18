@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BFC</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: #ccc;
+        }
+        .ct{
+            width: 500px;
+            margin: 0 auto;
+            background: pink;
+        }
+        .ct .box1{
+            xdisplay: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            border: 1px solid red;
+        }
+        .ct .box2{
+            xdisplay: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 50px;
+            border: 1px solid blue;
+        }
+</style>
+</head>
+<body>
+    <div class="ct">
+        <div class="box1">1</div>
+        <div class="box2">2</div>
+    </div>
+</body>
+</html>
