@@ -1,0 +1,63 @@
+/*
+
+2. Three percentage columns(n.2)
+
+三栏布局
+
+三个部分，分别是wrapper、navigation、extra
+
+要求：
+
+在1的基础上，调换navigation和extra
+图示
+ */
+/*布局*/
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+#content {
+    margin: 0 25%;
+}
+
+#navigation {
+    float: left;
+    width: 25%;
+    margin-left: -25%;
+}
+
+#extra {
+    float: left;
+    width: 25%;
+    margin-left: -100%;
+}
+
+#footer {
+    clear: left;
+}
+
+
+
+/**/
+#extra {
+    background-color: rgb(253, 133, 67);
+}
+
+#footer {
+    height: 14px;
+    padding: 5px 10px 5px 10px;
+    color: #FFF;
+    background-color: #333;
+}
+
+#footer p {
+    line-height: 14px;
+    margin: 0px;
+}
+
+#content {
+    /* margin: 0 auto; */
+    text-align: center;
+    background-color: cadetblue;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>40 layout exercises</title>
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/layout1.css" id="layout-css-file">
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/loadRes.js"></script>
+    <style>
+        /* Define custom fonts */
+        @font-face
+        {
+            font-family: 'BallparkWeiner';
+            src: url('fonts/ballpark.eot');
+            src: url('fonts/ballpark.eot?#iefix') format('embedded-opentype'),
+                url('fonts/ballpark.woff') format('woff'),
+                url('fonts/ballpark.ttf') format('truetype'),
+                url('fonts/ballpark.svg#BallparkWeiner') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face
+        {
+            font-family: 'Dayrom';
+            src: url('fonts/dayrom.eot');
+            src: url('fonts/dayrom.eot?#iefix') format('embedded-opentype'),
+                url('fonts/dayrom.woff') format('woff'),
+                url('fonts/dayrom.ttf') format('truetype'),
+                url('fonts/dayrom.svg#Dayrom') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* Main elements of the page */
+
+        body
+        {
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            color: #181818;
+            margin: 0; 
+            padding: 0;
+        }
+
+        .nav {
+            float: left;
+            width: 8%;
+            max-width: 8%;
+            overflow-y: scroll;
+            overflow-x: auto;
+            margin-left: 10px;
+            height: 645px;
+            max-height: 645px;
+        }
+
+        .page {
+            float: left;
+            width: 90%;
+            max-width: 90%;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+        
+        section {
+            background: lightblue;
+        }
+        .ui-button {
+            margin: 5px;
+        }
+        #header {
+            /* font-family: Dayrom, serif;
+            font-weight: normal;
+            text-transform: uppercase; */
+            font-family: 'BallparkWeiner', serif;
+            font-size: 2.5em;
+            font-weight: normal;
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+        <aside class="nav">
+            
+        </aside>
+        <section class="page">
+            <div id="container">
+                <div id="header">Header</div>
+                <div id="wrapper">
+                    <div id="content">
+                        <strong>1)Content here</strong>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, officia molestias beatae id alias illum, distinctio ut cupiditate
+                        tempore nemo sequi sunt explicabo magni aperiam quis rerum delectus eveniet aspernatur. Lorem ipsum dolor sit
+                        amet, consectetur adipisicing elit. Exercitationem, sint impedit necessitatibus cumque optio iure. Tempora doloremque
+                        eaque reiciendis dolorem optio consequuntur id quo repudiandae qui mollitia. Quibusdam, officiis nobis. Lorem,
+                        ipsum dolor sit amet consectetur adipisicing elit. Quo, odit maxime corporis exercitationem doloribus explicabo
+                        molestias quas nostrum enim incidunt cumque excepturi id magni dignissimos obcaecati quae saepe voluptatum ea!
+                    </div>
+                </div>
+                <div id="navigation">
+                    <strong>2)Navigation here</strong>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, est similique nam labore dicta unde esse nobis, fugit amet animi
+                    alias quas deserunt magni! Cum eaque eveniet iusto culpa ad?
+                </div>
+                <div id="extra">
+                    <strong>3)More stuff here</strong>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat consequuntur, perspiciatis in quasi adipisci molestiae
+                    optio iste suscipit numquam voluptates quod quidem quae, odio tempora accusantium quisquam debitis labore voluptate.
+                </div>
+                <div id="footer">Footer</div>
+            </div>
+        </section>
+    </div>
+    
+</body>
+</html>

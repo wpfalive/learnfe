@@ -1,0 +1,34 @@
+#header {
+    vertical-align: middle;
+    padding: 10px;
+    background: #eee;
+    /* xheight: 30px; 对！就是这里不用设置高度！使用padding撑开*/
+    color: #7ab124
+}
+
+#wrapper {
+    display: inline-block;
+    width: 46%;
+    margin: 0 2%
+}
+
+#navigation {
+    float: left;
+    left: 0;
+    width: 23%;
+    background: #bacbfd;
+    padding: 1%;
+}
+
+#extra {
+    float: right;
+    right: 0;
+    width: 23%;
+    background: #fd8543;
+    padding: 1%;
+}
+#footer {
+    background: #333;
+    padding-left: 10px;
+    color: #fff
+}

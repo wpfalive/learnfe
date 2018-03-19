@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="wrapper"></div>
+    <script type="text/template" id="page">
+        <div>
+            <h1>{{title}}</h1>
+            <ul>
+                {{#each todos}}
+                    <li>
+                        <input type="checkbox" {{bindAttr checked="done"}}>
+                        <span>{{content}}</span>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </script>
+    <script src="handlebars-v4.0.11.js"></script>
+    <script>
+        var templateSrc = document.querySelector("#page").innerHTML
+        var template = Handlebars.compile(templateSrc)
+        document.querySelector('#wrapper').innerHTML = template({
+            title: 'todos',
+            todos: [
+                {
+                    content: 'read a book',
+                    done: true,
+                },
+                {
+                    content: 'call my girl friend',
+                    done: false
+                }
+            ]
+        })
+    </script>
+</body>
+</html>

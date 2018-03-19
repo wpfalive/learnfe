@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0; 
+            padding: 0;
+        }
+        
+        #header {
+            vertical-align: middle;
+            padding: 10px;
+            background: #eee;
+            /* xheight: 30px; 对！就是这里不用设置高度！使用padding撑开*/
+            color: #7ab124
+        }
+        
+        #wrapper {
+            display: inline-block;
+            width: 46%;
+            margin: 0 2%
+        }
+
+        #navigation {
+            float: left;
+            left: 0;
+            width: 23%;
+            background: #bacbfd;
+            padding: 1%;
+        }
+
+        #extra {
+            float: right;
+            right: 0;
+            width: 23%;
+            background: #fd8543;
+            padding: 1%;
+        }
+        #footer {
+            background: #333;
+            padding-left: 10px;
+            color: #fff
+        }
+    </style>
+</head>
+<body>
+    <!-- wrapper 居中且占据50%宽度 
+        navigation、extra 宽度25%，分居content两侧，左侧navigation，右侧extra -->
+    <div id="container">
+        <div id="header">Header</div>
+        <div id="wrapper">
+            <div id="content">
+                <strong>1)Content here</strong>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, officia molestias beatae id alias illum, distinctio ut cupiditate tempore nemo sequi sunt explicabo magni aperiam quis rerum delectus eveniet aspernatur.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem, sint impedit necessitatibus cumque optio iure. Tempora doloremque eaque reiciendis dolorem optio consequuntur id quo repudiandae qui mollitia. Quibusdam, officiis nobis.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo, odit maxime corporis exercitationem doloribus explicabo molestias quas nostrum enim incidunt cumque excepturi id magni dignissimos obcaecati quae saepe voluptatum ea!
+            </div>
+        </div>
+        <div id="navigation"><strong>2)Navigation here</strong>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, est similique nam labore dicta unde esse nobis, fugit amet animi alias quas deserunt magni! Cum eaque eveniet iusto culpa ad?
+        </div>
+        <div id="extra"><strong>3)More stuff here</strong>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat consequuntur, perspiciatis in quasi adipisci molestiae optio iste suscipit numquam voluptates quod quidem quae, odio tempora accusantium quisquam debitis labore voluptate.
+        </div>
+        <div id="footer">Footer</div>
+    </div>
+</body>
+</html>

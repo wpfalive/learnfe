@@ -223,3 +223,38 @@ class Queue2 {
         return this
     }
 }
+
+// 再改进 换一种思路 不用running了
+
+class Queue3 {
+    constructor() {
+        var self = this //后续一直使用self
+        self._tasks = []
+        // self._running = false
+        self.next = function () { //这个函数里面，由于不是箭头函数，不能直接使用外部的this
+            if (self._tasks.length) {
+                let nextFunction = self._tasks.shift()
+                nextFunction(self.next)
+            } else {
+                // self._running = false
+            }
+        }
+    }
+
+    _start() {
+        var f = this._tasks.shift()
+        setTimeout(() => {
+            f(this.next)
+        })
+    }
+    // add是原型上的属性
+    add(f) {
+        if (!this._tasks.length) {
+            this._tasks.push(f)
+            this._start()
+        } else {
+            this._tasks.push(f)
+        }
+        return this
+    }
+}

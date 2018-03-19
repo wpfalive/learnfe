@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- git上的参考实现，没啥价值 -->
+    <style>
+        /*思考为何 wrapper 需要 float*/
+        /*元素浮动后，display 变为 inline-block，所以后面的元素才可以通过 margin-left 负值来回到上一行*/
+            /*.wrapper{
+            float: left;
+            width: 100%;
+        }
+        .content{
+            margin: 0 25%;
+        }*/
+        /*以下样式规则可以替代上面注释内容*/
+        #wrapper{
+            float: left;
+            margin: 0 25%;
+        }
+        #navigation{
+            width: 25%;
+            float: left;
+            margin-left: -100%;
+        }
+        #extra{
+            width: 25%;
+            float: left;
+            margin-left: -25%;
+        }
+        #footer{
+            /*若不清除浮动，footer 高度会包含整个 container 内容，通过设置 background-color 可以看到*/
+            clear: left;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- wrapper 居中且占据50%宽度 
+        navigation、extra 宽度25%，分居content两侧，左侧navigation，右侧extra -->
+    <div id="container">
+        <div id="header">Header</div>
+        <div id="wrapper">
+            <div id="content">
+                <strong>1)Content here</strong>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, officia molestias beatae id alias illum, distinctio ut cupiditate
+                tempore nemo sequi sunt explicabo magni aperiam quis rerum delectus eveniet aspernatur. Lorem ipsum dolor
+                sit amet, consectetur adipisicing elit. Exercitationem, sint impedit necessitatibus cumque optio iure. Tempora
+                doloremque eaque reiciendis dolorem optio consequuntur id quo repudiandae qui mollitia. Quibusdam, officiis
+                nobis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo, odit maxime corporis exercitationem
+                doloribus explicabo molestias quas nostrum enim incidunt cumque excepturi id magni dignissimos obcaecati
+                quae saepe voluptatum ea!
+            </div>
+        </div>
+        <div id="navigation">
+            <strong>2)Navigation here</strong>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, est similique nam labore dicta unde esse nobis, fugit amet animi
+            alias quas deserunt magni! Cum eaque eveniet iusto culpa ad?
+        </div>
+        <div id="extra">
+            <strong>3)More stuff here</strong>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat consequuntur, perspiciatis in quasi adipisci molestiae
+            optio iste suscipit numquam voluptates quod quidem quae, odio tempora accusantium quisquam debitis labore voluptate.
+        </div>
+        <div id="footer">Footer</div>
+    </div>
+</body>
+
+</html>
