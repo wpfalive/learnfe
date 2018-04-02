@@ -8,7 +8,14 @@ app.all('/data/([\$])book', function (req, res, next) {
 })
 
 app.get('/', function (req, res, next) {
-    res.send('root')
+    // res.send('root')
+    console.log('root path')
+    //next()
+})
+
+app.get('/', function (req, res, next) {
+    res.send('root2')
+    console.log('root path 2')
     next()
 })
 

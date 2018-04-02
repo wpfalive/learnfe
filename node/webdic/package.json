@@ -1,0 +1,21 @@
+{
+  "name": "webdic",
+  "version": "1.0.0",
+  "description": "a web dictionary",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "wpfdic": "./bin/webdic.js"
+  },
+  "keywords": [
+    "dictionary"
+  ],
+  "author": "wpf",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chalk": "^2.3.2"
+  }
+}
