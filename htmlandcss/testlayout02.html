@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *::before {
+            content: attr(class)
+        }
+        header {
+            background-color: black;
+        }
+        header div {
+            width: 300px;
+            margin: auto;
+        }
+        .slider {
+            width: 300px;
+            height: 100px;
+            margin: auto;
+            background-color: pink;
+        }
+        .grid {
+            width: 300px;
+            margin: 0 auto;
+            font-size: 0;
+        }
+        .grid ul {
+            list-style-type: none;
+            margin: 0 -4px;
+            padding: 4px 0;
+        }
+        .grid li {
+            width: 69px;
+            height: 69px;
+            display: inline-block;
+            margin: 4px;
+            font-size: 16px;
+            background-color: violet;
+        }
+        /* .grid li:nth-child(4n) {
+            margin-right: 0;
+        } */
+    </style>
+</head>
+<body>
+    <section>
+        <header>
+            <div>this is header</div>
+        </header>
+    
+        <div class="slider">
+
+        </div>
+        <div class="grid">
+            <ul>
+                <li>01</li>
+                <li>02</li>
+                <li>03</li>
+                <li>04</li>
+                <li>05</li>
+                <li>06</li>
+                <li>07</li>
+                <li>08</li>
+            </ul>
+        </div>
+        <header>
+            <div>this is header</div>
+        </header>
+    </section>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue component todolist</title>
+    <style>
+        ul, ol {
+            list-style: none;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    Vue.component('TodoApp', {
+        template: `
+                <div>
+                    <div>
+                        <input type="checkbox"></input>
+                        <input value="" type="text"></input>
+                    </div>
+                    <TodoList :todos="todos"></TodoList>
+                    <!--div>
+                        <TodoCount></TodoCount>
+                        <TodoTypeToggle></TodoTypeToggle>
+                        <ClearComplete></ClearComplete>
+                    </div -->
+                </div>
+            `,
+        data() {
+            return {
+                todos: [{
+                    complete: false,
+                    content: 'read a book',
+                }, {
+                    complete: false,
+                    content: 'watch a movie',
+                }, {
+                    complete: true,
+                    content: 'call my girl friend',
+                }]
+            }
+        }
+    })
+    Vue.component('TodoList', {
+        props: {
+            todos: {
+                type: Array
+            },
+        },
+        template: `
+                <ul>
+                    <TodoItem v-for="(item, index) in todos" :todo="item" :key="index"></TodoItem>
+                </ul>
+            `,
+    })
+    Vue.component('TodoItem', {
+        props: {
+            todo: {
+                type: Object,
+            },
+        },
+        template: `
+                <li>
+                    <input type="checkbox" :checked="todo.complete">
+                    <span>{{todo.content}}</span>
+                    <span>X</span>
+                </li>
+            `,
+    })
+    var app = new Vue({
+        el: '#app',
+        template: `<TodoApp></TodoApp>`,
+    })
+</script>
+</html>

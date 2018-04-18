@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        ul, ol {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <json-viewer :value="data" ></json-viewer> -->
+
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        function createElement(name, attrs, ...children) {
+            let node = document.createElement(name)
+            for(let prop in attrs) {
+                node.setAttribute(prop, attrs[prop])
+            }
+
+            for(let i = 0; i < children.length; i++) {
+                // 假设只有文本节点和节点这两种情况
+                if(typeof children[i] === 'string') {
+                    node.appendChild(document.createTextNode(children[i]))
+                } else {
+                    node.appendChild(children[i])
+                }
+            }
+            return node
+        }
+
+        Vue.component('json-viewer', {
+            props: {
+                value: {},
+                hideContent: {
+                    type: Boolean,
+                    default: false,
+                },
+            },
+            template: `
+                <span>
+                    <span v-if="typeof value === 'string'">"{{value}}"</span>
+                    <span v-else-if="typeof value === 'number'">{{value}}</span>
+                    <span v-else-if="typeof value === 'boolean'">{{value}}</span>
+                    <span v-else-if="value === null">null</span>
+                    <span v-else-if="Array.isArray(value)">
+                        [<ul v-if="!hideContent">
+                            <li v-for="(item, index) in value">
+                                <json-viewer :hideContent="!fieldsStatus[index]" :value="item"></json-viewer>{{index === value.length - 1 ? '':','}}
+                            </li>
+                        </ul>
+                        <span v-else>...</span>]
+                    </span>
+                    <span v-else-if="typeof value === 'object'">
+                        {<ul v-if="!hideContent">
+                            <li v-for="(val, prop, index) in value">
+                                <span @click="fieldsStatus.splice(index, 1, !fieldsStatus[index])">{{prop}}
+                                </span>
+                                : 
+                                <json-viewer :hideContent="!fieldsStatus[index]" v-show="fieldsStatus[index]" :value="val"></json-viewer>
+
+                                {{index === Object.keys(value).length - 1 ? '': ','}}
+                            </li>
+                        </ul>
+                        <span v-else>...</span>}
+                    </span>
+                    
+                </span>
+            `,
+            data() {
+                return {
+                    fieldsStatus: new Array(Object.keys(this.value).length).fill(0).map(it => true)
+                }
+            }     ,
+            methods: {
+                size: function(obj) {
+                    return Object.keys(obj).length
+                }
+            }
+        })
+
+        app = new Vue( {
+            el: '#app',
+            data: {
+                data: {
+                    foo: 1,
+                    bar: 2,
+                    baz: [1,2,3],
+                    baa: {
+                        width: 1,
+                        height: 2,
+                        pos: {
+                            x: 1,
+                            y: 2,
+                            offset: {
+                                x: 90,
+                                y: 70,
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

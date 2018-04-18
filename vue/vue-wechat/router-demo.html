@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/foo" >foo</router-link>
+        <router-link to="/bar" >bar</router-link>
+        
+        <router-view></router-view>
+    </div>
+</body>
+<script type="text/template" id="home"> 
+    <section>
+        <h1>home</h1>
+        <ul>
+            <li>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam itaque deleniti vitae sapiente quaerat assumenda culpa consequatur consectetur eaque quia ea facilis at magni, non nam ratione repellendus ex vero.</p>
+            </li>
+            <li>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam itaque deleniti vitae sapiente quaerat assumenda culpa consequatur consectetur eaque quia ea facilis at magni, non nam ratione repellendus ex vero.</p>
+            </li>
+            <li>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam itaque deleniti vitae sapiente quaerat assumenda culpa consequatur consectetur eaque quia ea facilis at magni, non nam ratione repellendus ex vero.</p>
+            </li>
+        </ul>
+    </section>
+</script>
+<script type="text/template" id="post">
+<section>
+        <h1>post</h1>
+        <ul>
+            <li>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam itaque deleniti vitae sapiente quaerat assumenda culpa consequatur consectetur eaque quia ea facilis at magni, non nam ratione repellendus ex vero.</p>
+            </li>
+            <li>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam itaque deleniti vitae sapiente quaerat assumenda culpa consequatur consectetur eaque quia ea facilis at magni, non nam ratione repellendus ex vero.</p>
+            </li>
+            <li>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam itaque deleniti vitae sapiente quaerat assumenda culpa consequatur consectetur eaque quia ea facilis at magni, non nam ratione repellendus ex vero.</p>
+            </li>
+        </ul>
+    </section>
+</script>
+<script src="vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+<script>
+    const Foo = {
+        template: `<h1>Foo</h1>`,
+    }
+    const Bar = {
+        template: `<h1>Bar</h1>`,
+    }
+
+    var router = new VueRouter({
+        routes: [
+            {path: '/foo', component: Foo},
+            {path: '/bar', component: Bar},
+        ]
+    })
+    new Vue({
+        el: '#app',
+        router,
+    })
+    // $(document).ready(function() {
+    //     // 为了保证页面刷新后，页面显示的内容不变
+    //     const pageName = location.hash
+    //     const tplEl = $(pageName)
+    //     console.log(topEl.html())
+    //     if(tplEl.length) {
+    //         $('#main').html(tplEl.html())
+    //     }
+    // })
+
+    // $(window).on('hashchange', function () {
+    //         const pageName = location.hash
+    //         console.log(pageName)
+    //         const tplEl = $(pageName)
+    //         if(tplEl.length) {
+    //             $('#main').html(tplEl.html())
+    //         }
+    //     })
+</script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>sina news</title>
+    <style>
+        html, body, ul, li, p, div {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        ul, li {
+            list-style: none;
+        }
+        #doc {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .clearfix::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .pict .item {
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="doc">
+        <ul class="pagination clearfix">
+            <li data-page=1>第1页</li>
+            <li data-page=2>第2页</li>
+            <li data-page=3>第3页</li>
+            <li data-page=4>第4页</li>
+        </ul>
+        <ul class="pic-ct clearfix">
+            <li class="item">
+                <a href="" class="link" style="background-image: url()"></a>
+                <h4 class="header">title</h4>
+                <p class="desp"></p>
+            </li>
+        </ul>
+    </div>
+    <div id="cover">
+        <div class="loading"></div>
+    </div>
+</body>
+</html>

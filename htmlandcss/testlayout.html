@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3 col</title>
+    <style>
+        * {
+            /* 或者使用outline也不影响布局 但是看起来像边框 */
+            background: rgba(0,0,0,0.1);
+            box-shadow: 0 0 1px 0 red;
+        }
+        header {
+            height: 30px;
+            background: pink;
+            padding-right: calc(50% - 100px);
+            padding-left: calc(50% - 100px);
+        }
+        .main {
+            font-size: 0;
+            border: 3px solid;
+            padding-top: 5px;
+            padding-bottom: 5px; 
+        }
+        .main div {
+            font-size: 16px;
+            box-sizing: border-box;
+            vertical-align: top;
+            display: inline-block; /*inline-block 四周margin不会重叠*/
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border: 3px solid;
+            width: calc((100% - 30px)/3);
+            height: 40px;
+        }
+        .main div:nth-child(3n+0) {
+            margin-right: -5px;
+
+        }
+        footer {
+            width: 100%;
+            background: lightblue;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <header> 
+            <div>
+                aaa
+            </div>
+        </header>
+    </section>
+    <section>
+        <section class="main">
+            <div class="cube">1</div>
+            <div class="cube">2</div>
+            <div class="cube">3</div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+            <div class="cube"></div>
+        </section>
+    </section>
+    <section>
+        <footer></footer>
+    </section>
+</body>
+</html>
