@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todolist</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script src="./vue.js"></script>
+<script src="https://unpkg.com/vuex"></script>
+<script>
+    var store = new Vuex.store({
+        state: {
+            count: 0,
+            todos: [{done: false, content: 'eat'},]
+        }
+    })
+    Vue.component('TodoApp', {
+        template: `
+            <div>
+                <div>
+                    <input type="checkbox" />
+                    <input type="text" />
+                </div>
+                
+                <TodoList :todos="todos"></TodoList>
+            </div>
+        `,
+        // < div >
+        // <TodoCount></TodoCount>
+        // <TodoTypeToggle><TodoTypeToggle>
+        //     <ClearComplete></ClearComplete>
+        //         </div>
+        data() {
+            return {
+                todos: [
+                    {
+                        id: 1,
+                        done: false, 
+                        content: 'eat',
+                    },
+                    {   id: 2,
+                        done: true,
+                        content: 'drink',
+                    },
+                ]
+            }
+        },
+        mounted() {
+            eventCenter.$on('delete', todo => {
+                console.log(todo)
+                this.todos = this.todos.filter(it => it !== todo)
+            })
+        }
+    })
+    Vue.component('TodoList', {
+        props: {
+            todos: Array,
+        },
+        template: `
+            <ul>
+                <TodoItem v-for="(todo, index) in todos" :todo="todo" :keys="todo.id">
+                </TodoItem>
+            </ul> 
+        `,
+    })
+    Vue.component('TodoItem', {
+        props: {
+            todo: Object,
+        },
+        template: `
+            <li>
+                <input type="checkbox" v-model="todo.done"/>
+                <span>{{todo.content}}</span>
+                <span @click="delTodo">X</span>
+            </li>
+        `,
+        methods: {
+            delTodo() {
+                eventCenter.$emit('delete', this.todo)
+            }
+        }
+    })
+
+    var eventCenter = new Vue()
+
+    var app = new Vue({
+        el: '#app',
+        store: store,
+        template: '<TodoApp ref="todoApp"/>'
+    })
+</script>
+</html>

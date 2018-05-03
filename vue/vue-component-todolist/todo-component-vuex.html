@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todolist</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script src="./vue.js"></script>
+<script src="./vuex.js"></script>
+<script>
+    var store = new Vuex.Store({
+        state: {
+            showingCategory: 'all',
+            idCount: 3,
+            todos: [{
+                id: 1,
+                done: false,
+                content: 'eat'
+            },{
+                id: 2,
+                done: true,
+                content: 'drink'
+            }]
+        },
+        getters: {
+            isAllDone: state => state.todos.every(it => it.done),
+            itemsLeft: state => state.todos.filter(it => !it.done).length,
+            // hasDone: state => state.todos.some(it => it.done),
+            hasDone: (state, getters) => state.todos.length - getters.itemsLeft > 0,
+        },
+        mutations: {
+            addTodo (state, content) {
+                state.todos.push({
+                    id: state.idCount++,
+                    done: false,
+                    content,
+                })
+            },
+            deleteTodo (state, todo) {
+                state.todos = state.todos.filter(it => it !== todo)
+            },
+            setAllDone(state) {
+                state.todos.forEach(it => it.done = true)
+                
+            },
+            setAllUnDone(state) {
+                state.todos.forEach(it => it.done = false)
+            },
+            toggleTodoStatus(state, todo) {
+                todo.done = !todo.done
+
+                // const index = state.todos.indexOf(todo)
+                // state.todos[index].done != state.todos[index].done
+            },
+            changeTodoContent(state, {todo, content}) {
+                todo.content = content
+            }
+        }
+    })
+    Vue.component('TodoApp', {
+        template: `
+            <div>
+                <div>
+                    <ToggleSelectAll />
+                    <TodoInput />
+                </div>
+                
+                <TodoList :todos="todos"></TodoList>
+            </div>
+        `,
+        // < div >
+        // <TodoCount></TodoCount>
+        // <TodoTypeToggle><TodoTypeToggle>
+        //     <ClearComplete></ClearComplete>
+        //         </div>
+        computed: {
+            ...Vuex.mapState({
+                todos: 'todos', // 当前组件中的todos字段来源于state中的todos字段
+            })
+        }
+    })
+
+    Vue.component('ToggleSelectAll', {
+        template: `<input type="checkbox" @click="toggle" :checked="isAllDone"/>`,
+        computed: Vuex.mapGetters({
+            isAllDone: 'isAllDone',
+            //等价于 isAllDone: () => store.getters.isAllDone
+        }),
+        methods: {
+            toggle() {
+                if(this.$store.getters.isAllDone) {
+                    this.$store.commit('setAllUnDone')
+                } else {
+                    this.$store.commit('setAllDone')
+                }
+            },
+        }
+    })
+
+    Vue.component('TodoInput', {
+        template: `<input type="text" v-model.trim="todoText" @keyup.enter="addTodo"/>`,
+        data() {
+            return {
+                todoText: '',
+            }
+        },
+        methods: {
+            addTodo() {
+                if(this.todoText) {
+                    this.$store.commit('addTodo', this.todoText)
+                    this.todoText = ''
+                }
+            }
+        }
+    })
+
+    Vue.component('TodoList', {
+        props: {
+            todos: Array,
+        },
+        template: `
+            <ul>
+                <TodoItem v-for="(todo, index) in todos" :todo="todo" :keys="todo.id">
+                </TodoItem>
+            </ul> 
+        `,
+    })
+    Vue.component('TodoItem', {
+        props: {
+            todo: Object,
+        },
+        template: `
+            <li>
+                <input type="checkbox" :checked="todo.done" @click="toggle(todo)"/>
+                <span v-show="!editing" @dblclick="editing=true">{{todo.content}}</span>
+                <input v-focus="" v-if="editing" ref="input" type="text" :value="todo.content" @blur="edit" @keyup.enter="edit">
+                <span @click="delTodo(todo)">X</span>
+            </li>
+        `,
+        data() {
+            return {
+                editing: false,
+            }
+        },
+        methods: {
+            edit() {
+                this.editing = false
+                this.$store.commit('changeTodoContent', {
+                    todo: this.todo, 
+                    content: this.$refs.input.value
+                })
+            },
+            toggle(todo) {
+                console.log('line159: ', todo.done)
+                this.$store.commit('toggleTodoStatus', todo)
+            },
+            delTodo(todo) {
+                this.$store.commit('deleteTodo', todo)
+            }
+        },
+        directives: {
+            focus: {
+                inserted: function(el) {
+                    el.focus()
+                }
+            }
+        },
+    })
+
+    var app = new Vue({
+        el: '#app',
+        store: store,
+        template: '<TodoApp/>'
+    })
+</script>
+</html>
