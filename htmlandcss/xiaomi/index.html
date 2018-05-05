@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小米商城</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #head-bar {
+            width: 100%;
+            background-color: #333;
+        }
+        #head-bar ul {
+            padding: 11.5px 0;
+        }
+        #head-bar ul li {
+            float: left;
+            margin: auto 1.5px;
+            list-style: none;
+            color: #b0b0b0;
+            font: 12px monospace;
+        }
+        #head-bar-left {
+            float: left;
+        }
+        #head-bar-right{
+            float: right;
+        }
+        .line {
+            color: #424242;
+            font-weight: 20;
+        }
+        .clearfix::after {
+            content: '';
+            clear: both;
+            display: block;
+        }
+        .msg {
+            padding-left: 10px;
+        }
+        .container {
+            width: 100%;
+            padding: 21px 0;
+            min-width: 1227px;
+            vertical-align: bottom;
+            white-space: nowrap; /*防止子元素换行*/
+        }
+        .logo {
+            display: inline-block;
+            margin-left: 8px;
+            width: 54px;
+            height: 54px;
+            background-color: #ff6700;
+            background-image: url("https://s01.mifile.cn/i/mi-logo.png");
+            background-repeat: no-repeat;
+        }
+        .nav {
+            display: inline-block;
+            margin-left: 178px;
+            vertical-align: 14px;
+        }
+        .nav ul {
+            min-width: 600px;
+        }
+        .nav ul li {
+            float: left;
+            padding: 0 9.5px;
+            font: 16px monospace;
+            list-style: none;
+        }
+        .nav ul li:hover {
+            color: #fc6721;
+        }
+        .search-bar {
+            display: inline-block;
+            margin-left: 90px;
+            vertical-align: 20px;
+        }
+        .search-bar input:focus {
+            border: 1px solid #fc6721;
+            outline: none;
+            transition: none;
+        }
+        .search-bar .text {
+            width: 295px;
+            height: 48px;
+            padding-right: 50px;
+            padding-left: 10px;
+            font-size: 20px;
+            border: 1px solid #bfbfbf;
+            transition: border-color 0.3s;
+        }
+        .search-bar .btn {
+            height: 48px;
+            width: 50px;
+            margin-left: -50px;
+            color: #fc6721;
+            -webkit-appearance: none;
+            vertical-align: 3px;
+        }
+        .search-bar .btn:active {
+            color: white;
+            background-color: #fc6721;
+        }
+        .suggest {
+            display: inline-block;
+            margin-left: -155px;
+            vertical-align: 20px;
+            width: 17px;
+        }
+        .suggest .suggest-btn {
+            background: #eeeeee;
+            -webkit-appearance: none;
+            font-size: 13px;
+            color: #757575;
+            text-decoration: none;
+        }
+        .suggest .suggest-btn:hover {
+            background: #fc6721;
+            color: #ffffff;
+            transition: all 0.1s linear;
+        }
+        .mid-container {
+            margin: 0 8px;
+            height: 460px;
+            width: 100%;
+        }
+        .mid-container .slidebar {
+            width: 100%;
+            height: 460px;
+        }
+        .mid-container nav {
+            float: left;
+            width: 234px;
+            opacity: 0.9;
+            background: #505050;
+        }
+        nav ul {
+            margin: 20px 0;
+        }
+        nav ul li {
+            list-style: none;
+            font: monospace;
+            color: #fbfbfb;
+            font-size: 14px;
+            padding: 11px 22px;
+        }
+        nav ul li:hover {
+            background: #fc6721;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="head-bar" class="clearfix">
+        <ul id="head-bar-left">
+            <li>小米商城</li>
+            <li><span class="line">|</span></li>
+            <li>MIUI</li>
+            <li><span class="line">|</span></li>
+            <li>IoT</li>
+            <li><span class="line">|</span></li>
+            <li>云服务</li>
+            <li><span class="line">|</span></li>
+            <li>水滴</li>
+            <li><span class="line">|</span></li>
+            <li>金融</li>
+            <li><span class="line">|</span></li>
+            <li>有品</li>
+            <li><span class="line">|</span></li>
+            <li>Select Region</li>
+        </ul>
+        <ul id="head-bar-right">
+            <li>登录</li>
+            <li><span class="line">|</span></li>
+            <li>注册</li>
+            <li><span class="line">|</span></li>
+            <li class="msg">消息通知</li>
+        </ul>
+    </section>
+    <div class="container">
+        <div class="logo"></div>
+        <div class="nav">
+            <ul>
+                <li>小米手机</li>
+                <li>红米</li>
+                <li>电视</li>
+                <li>笔记本</li> 
+                <li>盒子</li> 
+                <li>新品</li> 
+                <li>路由器</li> 
+                <li>智能硬件</li> 
+                <li>服务</li> 
+                <li>社区</li>
+            </ul>
+        </div>
+        <div class="search-bar">
+            <input type="text" class="text">
+            <input type="button" value="search" class="btn">
+        </div>
+        <div class="suggest">
+            <a href="#" class="suggest-btn">小米6X 拍人更美</a>
+        </div>
+    </div>
+    <div class="mid-container">
+        <nav>
+            <ul>
+                <li>手机 电话卡</li>
+                <li>电视 盒子</li>
+                <li>笔记本</li>
+                <li>智能 家电</li>
+                <li>健康 家居</li>
+                <li>出行 儿童</li>
+                <li>路由器 手机配件</li>
+                <li>移动电源 插线板</li>
+                <li>耳机 音箱</li>
+                <li>生活 米兔</li>
+            </ul>
+        </nav>
+        <div class="slidebar"></div>
+    </div>
+</body>
+</html>

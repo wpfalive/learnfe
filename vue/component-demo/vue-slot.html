@@ -1,0 +1,118 @@
+<div id="app">
+    <awesome-list :list="[1,2,3]">
+        <template slot="item" slot-scope="props">
+            <li>
+                {{props.data}}
+            </li>
+        </template>
+    </awesome-list>
+</div>
+<div id="example">{{message}}
+     <example></example>
+</div>
+<ul>
+    <li @click="currentView = 'home'"></li>
+    <li @click="currentView = 'post'"></li>
+    <li @click="currentView = 'archive'"></li>
+</ul>
+<component :is="currentView"></component>
+<script src="./vue.js"></script>
+<script>
+    Vue.component('awesome-list', {
+        props: ['list'],
+        template: `
+            <ul>
+                <slot name="item"
+                    v-for="item in list"
+                    :data="item">
+                </slot>
+            </ul>
+        `,
+    })
+    Vue.component('posts', {
+        template: `
+            <div>
+                <h1>posts</h1>
+                <ul>
+                    <li v-for="post in posts"></li>
+                </ul>    
+            </div>
+        `,
+        data() {
+            return {
+                posts: ['foo', 'bar', 'baz']
+            }
+        }
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            currentView: 'home',
+        },
+        methods: {
+            toshow: function () {
+                console.log(this.$children)
+                this.$children[0].tohidden = true;
+            },
+            warn: function (message, event) {
+                if(event) {
+                    event.preventDefault()
+                }
+                alert(message)
+            }
+        },
+        components: {
+            children: {
+                template: "<div v-if='tohidden' @click='tohide'>这里是子组件</div>",
+                data: function () {
+                    return {
+                        tohidden: false
+                    }
+                },
+                methods: {
+                    tohide: function () {
+                        this.tohidden = !this.tohidden;
+                    }
+                }
+            },
+            home: {
+                template: `<div>home</div>`,
+            },
+            archive: {
+                template: `<div>archive</div>`,
+            }
+        }
+    })
+    Vue.component('example', {
+        template: '<span @click="updateMessage">{{ message }}</span>',
+        data: function () {
+            return {
+                message: '没有更新'
+            }
+        },
+        methods: {
+            updateMessage: function () {
+                this.message = '更新完成'
+                console.log(this.$el.textContent) // => '没有更新'
+                this.$nextTick(function () {
+                    console.log(this.$el.textContent) // => '更新完成'
+                })
+            }
+        }
+    })
+
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            message: '123'
+        }
+    })
+    vm.message = 'new message' // 更改数据
+    // false
+    console.log(vm.$el.textContent === 'new message')
+     
+    Vue.nextTick(function () {
+        // true
+        console.log(vm.$el.textContent === 'new message') 
+    })
+</script>

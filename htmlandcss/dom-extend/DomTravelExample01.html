@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>dom travel</title>
+</head>
+<body>
+    <div id="div1">
+        <span id="span1"></span>
+        <span id="span2"></span>
+        <span id="span3"></span>
+    </div>
+    <div id="div2">
+        <span id="span4"></span>
+        <span id="span5"></span>
+        <span id="span6"></span>
+    </div>
+</body>
+<script>
+    const node_span4 = document.querySelector('#span4')
+    const node_div2 = node_span4.parentNode
+    console.log(node_div2)
+    const div2_previous_slbling = node_div2.previousSibling
+    console.log(div2_previous_slbling)
+    const node_div1 = div2_previous_slbling.previousSibling
+    console.log(node_div1) //div1
+    const div1_childNodes = node_div1.childNodes
+    console.log(div1_childNodes) //7: text span#span1... span#span3 text
+    const node_div1_next_slibling = node_div1.nextSibling
+    console.log(node_div1_next_slibling.nextSibling.id)
+    console.log(node_div2.firstChild, node_div2.lastChild, node_div2.lastChild.previousSibling)
+</script>
+</html>

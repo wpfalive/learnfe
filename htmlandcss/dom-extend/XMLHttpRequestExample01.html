@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function createXHR() {
+        if (typeof XMLHttpRequest !== 'undefined') {
+            return new XMLHttpRequest()
+        } else if (typeof ActiveXObject != 'undefined') { 
+            // 适用于IE7以下的浏览器
+            if(typeof arguments.callee.activeXString !== 'string') {
+                var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0",
+                    "MSXML2.XMLHttp"]
+
+                for (var i = 0, len = versions.length; i < len; i++) {
+                    try {
+                        var xhr = new ActiveXObject(versions[i]);
+                        arguments.callee.activeXString = versions[i];
+                        return xhr;
+                    } catch (ex) {
+                        //skip
+                    }
+                }
+            }
+            return new ActiveXObject(arguments.callee.activeXString)
+        }
+    }
+
+    var xhr = createXHR()
+    xhr.open('get', 'example.php', true)
+    xhr.setRequestHeader('myheader', 'myvalue')
+    xhr.send(null)
+
+
+    let xhr5 = createXHR()
+    xhr5.onreadystatechange = function(event) {
+        if(xhr5.readyState === 4) {
+            if((xhr5.status >= 200 && xhr5.status < 300) || xhr5.status === 304) {
+                console.log(xhr5.responseText)
+            } else {
+                console.log('Request was unsuccessful' + xhr5.status)
+            }
+        }
+    }
+    xhr5.open('post', 'postexample')
+</script>
+</html>

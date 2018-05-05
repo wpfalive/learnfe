@@ -10,12 +10,77 @@
     </style>
 </head>
 <body>
-    <div id="app">
-        <!-- <json-viewer :value="data" ></json-viewer> -->
 
+    <div id="app">
+        <!-- <component :is="who"></component>
+        <button @click="changeComponent">changeComponent</button> -->
+        <!-- <panda here="China"></panda> -->
+        <!-- <wpf-compnent></wpf-compnent>
+        <ul>
+            <li v-for=" aa in outData.arr">{{aa}}</li>
+        </ul> -->
+        <h1>vue.extend-扩展实例构造器</h1>
+        <hr>
+        <div id="foo">name: {{authorName}}</div>
+        <!-- <author1></author1> -->
+        <!-- <div v-jspang="color" id="demo" v-if="ifshow">
+            {{count}}
+        </div>
+        <div>
+            <button @click="add">Add</button>
+        </div>
+        <div>
+            <button @click="ifshow=!ifshow">toggle</button>
+        </div> -->
+        <!-- <json-viewer :value="data" ></json-viewer> -->
+        <!-- <app-layout>
+            <h1 slot="header">这里可能是一个页面标题</h1>
+            <p>主要内容的一个段落。</p>
+            <p>另一个主要段落。</p>
+            <p slot="footer">这里有一些联系信息</p>
+        </app-layout> -->
     </div>
+    <!-- <button onclick="add()">外部添加</button> -->
+    <template id="template-test">
+        <div>
+            <header>
+                <slot name="header"></slot>
+            </header>
+            <main>
+                <slot></slot>
+            </main>
+            <footer>
+                <slot name="footer"></slot>
+            </footer>
+        </div>
+    </template>
+    <template id="countBtn">
+        <button @click="add"></button>
+    </template>
+
     <script src="./vue.js"></script>
     <script>
+        var authorExtend = Vue.extend({
+            template: `<p><a :href="authorUrl">{{authorName}}</a></p>`,
+            data() {
+                return {
+                    authorName: 'wpf',
+                    authorUrl: 'http://www.baidu.com',
+                }
+            }
+        })
+        new authorExtend().$mount('#foo')
+
+        var componentA = {
+            template: `<div style="color:lightblue">this is wpf speaking a</div>`
+        }
+        var componentB = {
+            template: `<div style="color:pink">this is wpf speaking b</div>`
+        }
+        var componentC = {
+            template: `<div style="color:silver">this is wpf speaking c</div>`
+        }
+
         function createElement(name, attrs, ...children) {
             let node = document.createElement(name)
             for(let prop in attrs) {
@@ -32,7 +97,40 @@
             }
             return node
         }
-
+        
+        Vue.directive('jspang', {
+            bind:function(el, binding, vnode) {
+                console.log('1 - bind')
+                el.style = 'color:' + binding.value
+            },
+            inserted: function () {//绑定到节点
+                console.log('2 - inserted');
+            },
+            update: function () {//组件更新
+                console.log('3 - update');
+            },
+            componentUpdated: function () {//组件更新完成
+                console.log('4 - componentUpdated');
+            },
+            unbind: function () {//解绑
+                console.log('5 - unbind');
+            }
+        })
+        
+        Vue.component('count-viewer', {
+            template: `#countBtn`,
+            methods: {
+                add() {
+                    this.count += 1
+                }
+            }
+        })
+        Vue.component('wpf-compnent', {
+            template: `<p style='color:lightblue;'>wpf's component</p>`
+        })
+        Vue.component('app-layout', {
+            template: `#template-test`,
+        })
         Vue.component('json-viewer', {
             props: {
                 value: {},
@@ -68,24 +166,35 @@
                         </ul>
                         <span v-else>...</span>}
                     </span>
-                    
                 </span>
             `,
             data() {
                 return {
                     fieldsStatus: new Array(Object.keys(this.value).length).fill(0).map(it => true)
                 }
-            }     ,
+            },
             methods: {
                 size: function(obj) {
                     return Object.keys(obj).length
                 }
             }
         })
-
-        app = new Vue( {
+        function add() {
+                console.log("我已经执行了");
+                // app.outData.arr[1] = 'ddd'
+                Vue.set(app.outData.arr,1,'ddd')
+            }
+        var outData = {
+            arr: ['a', 'b', 'c']
+        }
+        var app = new Vue({
             el: '#app',
             data: {
+                who: 'componentA',
+                outData: outData,
+                ifshow: true,
+                count: 0,
+                color: 'green',
                 data: {
                     foo: 1,
                     bar: 2,
@@ -103,6 +212,29 @@
                         }
                     }
                 }
+            },
+            methods: {
+                add: function () {
+                    this.count += 1
+                },
+                changeComponent() {
+                    if(this.who === 'componentA') {
+                        this.who = 'componentB'
+                    } else if(this.who === 'componentB') {
+                        this.who = 'componentC'
+                    } else {
+                        this.who = 'componentA'
+                    }
+                }
+            },
+            components: {
+                'panda': {
+                    template: `<div style="color:red;">Panda from {{here}}</div>`,
+                    props: ['here'],
+                },
+                componentA,
+                componentB,
+                componentC,
             }
         })
     </script>

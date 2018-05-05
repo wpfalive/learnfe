@@ -45,7 +45,6 @@
             },
             setAllDone(state) {
                 state.todos.forEach(it => it.done = true)
-                
             },
             setAllUnDone(state) {
                 state.todos.forEach(it => it.done = false)
@@ -79,7 +78,9 @@
         //         </div>
         computed: {
             ...Vuex.mapState({
-                todos: 'todos', // 当前组件中的todos字段来源于state中的todos字段
+                // 当前组件中的todos字段来源于state中的todos字段
+                // 等价于 return this.$store.state.todos
+                todos: 'todos', 
             })
         }
     })
@@ -137,7 +138,7 @@
             <li>
                 <input type="checkbox" :checked="todo.done" @click="toggle(todo)"/>
                 <span v-show="!editing" @dblclick="editing=true">{{todo.content}}</span>
-                <input v-focus="" v-if="editing" ref="input" type="text" :value="todo.content" @blur="edit" @keyup.enter="edit">
+                <input v-focus v-if="editing" ref="input" type="text" :value="todo.content" @blur="edit" @keyup.enter="edit">
                 <span @click="delTodo(todo)">X</span>
             </li>
         `,
@@ -155,7 +156,6 @@
                 })
             },
             toggle(todo) {
-                console.log('line159: ', todo.done)
                 this.$store.commit('toggleTodoStatus', todo)
             },
             delTodo(todo) {

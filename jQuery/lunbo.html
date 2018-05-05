@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基于jQuery的轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .imgList {
+            width: 4900px;
+            font-size: 0; /* 去除inline元素由换行产生的空隙*/
+        }
+        .imgList li {
+            list-style: none;
+            display: inline-block;
+        }
+        .imgList li img {
+            height: 366px;
+            width: 980px;
+            vertical-align: bottom;
+        }
+        #prev {
+
+        }
+        #next {
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="banner">
+            <ul class="imgList">
+                <li><a href="#"><img src="https://i1.mifile.cn/a4/xmad_15242074164131_gSCTd.jpg" alt="轮播图1"></a></li>
+                <li><a href="#"><img src="https://i1.mifile.cn/a4/xmad_15241430593807_TpMIx.jpg" alt="轮播图2"></a></li>
+                <li><a href="#"><img src="https://i1.mifile.cn/a4/xmad_15233543676776_LtpMQ.jpg" alt="轮播图3"></a></li>
+                <li><a href="#"><img src="https://i1.mifile.cn/a4/xmad_15242074164131_gSCTd.jpg" alt="轮播图4"></a></li>
+                <li><a href="#"><img src="https://i1.mifile.cn/a4/T1o2C_Bbhv1RXrhCrK.jpg" alt="轮播图5"></a></li>
+            </ul>
+            <img src="//i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png" alt="" id="prev">
+            <img src="//i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png" alt="" id="next">
+            <div class="bg"></div>
+            <ul class="infoList">
+                <li>前端之路1</li>
+                <li>前端之路2</li>
+                <li>前端之路3</li>
+                <li>前端之路4</li>
+                <li>前端之路5</li>
+            </ul>
+            <ul class="indexList">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

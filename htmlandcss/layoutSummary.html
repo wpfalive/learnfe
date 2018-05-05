@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- https://zhuanlan.zhihu.com/p/25565751 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>layout summary</title>
+    <style>
+        * {
+            border: 1px solid lightblue;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .sub {
+            width: 100px;
+            float: left;
+        }
+        .extra {
+            width: 200px;
+            float: right;
+        }
+        .main {
+            margin-left: 100px;
+            margin-right: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="sub">sub</div>
+        <div class="extra">extra</div>
+        <div class="main">main</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    const ediv = document.createElement('div')
+    document.body.appendChild(ediv)
+    const attr = document.createAttribute('attr-name')
+    attr.nodeValue = 'value'
+    ediv.setAttributeNode(attr)
+    const nText = document.createTextNode('hello world')
+    ediv.appendChild(nText)
+    const nComment = document.createComment('comment here...')
+    ediv.appendChild(nComment)
+
+    let ediv2 = document.createElement('div')
+    ediv2.setAttribute('id', 'test_div')
+    document.body.appendChild(ediv2)
+    let fragment = document.createDocumentFragment()
+    for(let i = 0; i < 10; i++) {
+        let op = document.createElement('p')
+        let oText = document.createTextNode(i)
+        op.appendChild(oText)
+        fragment.appendChild(op)
+    }
+    ediv2.appendChild(fragment)
+
+    var container = document.createElement('div')
+
+    var ep = document.createElement('p')
+    ep.appendChild(document.createTextNode('Test appendChild'))
+    container.appendChild(ep)
+
+    var ep2 = document.createElement('p')
+    ep2.appendChild(document.createTextNode('test insertBefore'))
+    container.insertBefore(ep2, ep)
+    document.body.appendChild(container)
+
+    var ep3 = document.createElement('p')
+    ep3.appendChild(document.createTextNode('test replaceChild'))
+    container.replaceChild(ep3, ep)
+
+    ep2.setAttribute('data-name', 'value');
+    var ep2Clone = ep2.cloneNode();
+    var ep2CloneAll = ep2.cloneNode(true);
+    console.log(ep2Clone);
+    console.log(ep2CloneAll);
+
+</script>
+</html>

@@ -7,7 +7,7 @@ import router from './router' // 引入 ./router/index.js里面的设置项
 Vue.config.productionTip = false // 是否在控制台显示提示和警告
 
 /* eslint-disable no-new */
-new Vue({
+var app = new Vue({
   el: '#app',
   router,
   components: { App },
