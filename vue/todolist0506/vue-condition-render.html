@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 条件渲染 -->
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- if和else必须挨着一起使用，如果分开会报错 v-else used on element
+        <div> without corresponding v-if-->
+        <div v-if="show === 'a'" >hello world</div>
+        <div v-else-if="show === 'b'">bye world</div>
+        <div v-else>other world</div>
+        <!-- v-show的元素是一直存在于dom中的，只是值为false时，display:none -->
+        <!-- v-show性能较高，因为它不会频繁地把一个元素从页面删除再添加 -->
+        <!-- <div v-show="visible" data-test="v-show">is the visible</div> -->
+        <!-- <button @click="toggleShow">toggleShow</button> -->
+    </div>
+</body>
+<script src="../component-demo/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            show: 'a'
+        },
+        methods: {
+            toggleShow() {
+                this.show = !this.show
+            }
+        }
+    })
+</script>
+
+</html>

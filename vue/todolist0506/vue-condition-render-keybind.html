@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- key -->
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- vue在渲染页面的时候，会尽量地复用页面上已经存在的dom -->
+        <!-- 如果两个key值不一样，vue就不会去尝试复用以前的input标签了 -->
+        <div v-if="show">
+            用户名: <input type="text" key="username" :v-model="username">
+        </div>
+        <div v-else @keyup.enter="show=!show">
+            密码: <input type="text" key="password" v-model="password">
+        </div>
+    </div>
+</body>
+<script src="../component-demo/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            show: false,
+            username: '',
+            password: ''
+        },
+        methods: {
+        }
+    })
+</script>
+
+</html>

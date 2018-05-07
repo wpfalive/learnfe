@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{fullName}}
+        {{age}}
+    </div>
+</body>
+<script src="../component-demo/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            firstName: 'dell',
+            lastName: 'lee',
+            fullName: 'dell lee',
+            age: 28,
+        },
+        // 如果一个功能既可以通过watch实现，又可以通过methods实现，还可以通过computed实现，那么优先采用computed实现
+        watch: {
+            firstName() {
+                console.log('firstName计算了一次')
+                this.fullName = this.firstName + ' ' + this.lastName
+            },
+            lastName() {
+                console.log('lastName计算了一次')    
+                this.fullName = this.firstName + ' ' + this.lastName
+            }
+        }
+        // methods: {
+        //     fullName() {
+        //         // 这时候就算是更新了age，也会导致fullName方法重新调用
+        //         console.log('fullName计算了一次')
+        //         return this.firstName + " " + this.lastName
+        //     }
+        // }
+        // computed: {
+        //     // 依赖的变量没有发生任何改变的时候，计算属性不会重新计算
+        //     fullName() {
+        //         console.log('fullName计算了一次')
+        //         return this.firstName + " " + this.lastName
+        //     }
+        // }
+    })
+</script>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul li {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input @blur="add" type="text" v-model="newTask">
+        <button v-on:click="add">提交</button>
+        <ul>
+            <todo-item v-bind:todo="item"
+                       v-bind:index="index"
+                       v-for="(item,index) in todolist"
+                       @delete="handleItemDelete">
+            </todo-item>
+        </ul>
+
+        <item></item>
+        <!-- <item-new></item-new> -->
+    </div>
+</body>
+<script src="../component-demo/vue.js"></script>
+<script>
+    Vue.component('item', {
+        template: `<div>hello item</div>`
+    })
+    // Vue.component('itemNew', {
+    //     template: `<div>321 hello item</div>`
+    // })
+
+    var TodoItem = {
+        props: ['todo', 'index'],
+        template: `<li @click="handleItemClick">{{todo.content}}</li>`,
+        methods: {
+            handleItemClick() {
+                this.$emit('delete', this.index)
+            }
+        }
+    }
+    var app = new Vue({
+        el: '#app',
+        data: {
+            todolist: [],
+            newTask: '',
+        },
+        components: {
+            TodoItem,
+        },
+        methods: {
+            add() {
+                const newTodo = {
+                    content: this.newTask
+                }
+                this.todolist.push(newTodo)
+                this.newTask = ''
+            },
+            handleItemDelete(index) {
+                this.todolist.splice(index, 1)
+            }
+        }
+    })
+</script>
+</html>

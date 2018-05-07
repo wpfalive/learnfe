@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue列表渲染</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 不推荐index作为key值 -->
+        <!-- <div v-for="item of list" :key="item.id">
+            {{item.content}} --- {{item.id}}
+        </div> -->
+        <!--  template 帮我们包裹一些元素，但不会真正渲染到页面上 -->
+        <!-- <template v-for="item in list">
+            <div>{{item.content}}</div>
+            <span>{{item.id}}</span>
+        </template> -->
+        <div v-for="(item,key,index) in userInfo">
+            {{item}} --- {{key}} --- {{index}}
+        </div>
+    </div>
+</body>
+<script src="../component-demo/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            // 尝试修改数组内容的时候，不能直接通过下标来修改
+            // 只能通过vue提供的几个数组操作方法来操作数组，才能实现响应式
+            // 这种方式是不行的 vm.list[4] = 'aaa'
+            // Vue支持：pop push shift unshift splice sort reverse 
+            // 或直接修改list的引用
+
+            list: [{
+                    id: '01',
+                    content: 'hello',
+                }, {
+                    id: '02',
+                    content: 'world',
+                }, {
+                    id: '03',
+                    content: 'foo',
+                }, {
+                    id: '04',
+                    content: 'bar',
+                },
+            ],
+            // 要动态地给对象增加响应式属性，可以给userInfo重新引用新的对象
+            userInfo: {
+                age: 28,
+                name: 'foo',
+                salary: 'secret',
+                gender: 'male',
+            }
+        }
+    })
+
+</script>
+</html>
