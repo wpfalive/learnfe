@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件参数校验和非props特性</title>
+    <!-- props特性：父组件向子组件传值，恰好子组件声明了这个pros来接收父组件传递的值
+        :content="hello world"不会再渲染后的dom上显示
+    -->
+    <!-- 非props特性： 父组件想子组件传递一个属性，但子组件并没有相应的props进行接收
+         content="hello world" 会展示在dom中
+    -->
+</head>
+<body>
+    <div id="app">
+        <child :content="'hello world'"></child>
+    </div>
+    <script src="../component-demo/vue.js"></script>
+    <script>
+        Vue.component('child', {
+            // props: {
+            //     // content: [String, Number],
+            //     content: {
+            //         type: String,
+            //         // required: false,
+            //         // default: 'default value'
+            //         validator(val) {
+            //             return val.length > 5
+            //         }
+            //     }
+            // },
+            template: `<div>{{content}}</div>`,
+        })
+        var vm = new Vue({
+            el: '#app',
+        })
+    </script>
+</body>
+</html>

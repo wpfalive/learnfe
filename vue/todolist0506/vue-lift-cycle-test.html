@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue lift cycle test</title>
+</head>
+<body>
+    <div id="app">{{message}}</div>
+    <script src="../component-demo/vue.js"></script>     
+    <script>
+        const dt = {a: 1}
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dt,
+                message: 'hello world'
+            },
+            beforeCreate() {
+                console.log('beforeCreate', this.dt)
+            },
+            created() {
+                console.log('created', this.dt) 
+            },
+            beforeMount() {
+                debugger
+                console.log('beforeMount') 
+            },
+            mounted() {
+                debugger
+                console.log('mounted') 
+            },
+            beforeUpdate() {
+                console.log('beforeUpdate')
+            },
+            updated() {
+                console.log('updated') 
+            },
+            beforeDestroy() {
+                console.log('beforeDestroy')
+            },
+            destroyed() {
+                console.log('destroyed')
+            }
+        })    
+    </script>
+</body>
+</html>

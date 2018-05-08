@@ -10,7 +10,7 @@
 
 <body>
     <div id="app">
-        <!-- 现在data中查找fullName, 如果找不到再去computed中找 -->
+        <!-- 先在data中查找fullName, 如果找不到再去computed中找 -->
         {{fullName}}
     </div>
 </body>
@@ -21,7 +21,6 @@
         data: {
             firstName: 'dell',
             lastName: 'lee',
-
         },
         computed: {
             // fullName() {

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>插槽</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 通过插槽向子组件插入一段html结构 -->
+        <!-- 如果什么结构都没有传，就会显示slot中的默认内容 -->
+        <!-- 为插槽起一个名字 这种用法就叫具名插槽 -->
+        <!-- <child>
+            <h1>hello world</h1>
+        </child> -->
+
+        <body-content>
+            <div slot="header">header</div>
+            <div slot="footer">footer</div>
+        </body-content>
+    </div>
+    <script src="../component-demo/vue.js"></script>
+    <script>
+        
+        Vue.component('body-content', {
+            template: `<div>
+                            <slot name="header"></slot>
+                            <div>body content</div>
+                            <slot name="footer"></slot>
+                        </div>`
+        })
+        var vm = new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>

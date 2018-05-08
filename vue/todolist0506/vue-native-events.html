@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>给组件绑定原生事件</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 在child组件上绑定的时间，指的是监听自定义事件 必须在子组件中触发父组件的事件 this.$emit('handleClick') -->
+        <!-- 也可以在click后面加上.native事件修饰符 -->
+        <child @click.native="handleClick"></child>
+    </div>
+    <script src="../component-demo/vue.js"></script>
+    <script>
+        Vue.component('child', {
+            template: `<div>Child</div>`,
+        })
+        var vm = new Vue({
+            el: '#app',
+            methods: {
+                handleClick() {
+                    console.log('handle click')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

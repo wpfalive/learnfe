@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件使用中的细节点</title>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 通过ref引用的形式，来获取dom，进行dom的操作 -->
+        <!-- 如果是在组件加ref, 那么获取到的是组件的引用 -->
+        <!-- <div ref='hello' 
+             @click="handleDivClick"
+        >
+            hello world
+        </div> -->
+        <counter @change="handleChange" ref="one"></counter>
+        <counter @change="handleChange" ref="two"></counter>
+        <div>{{total}}</div>
+    </div>
+</body>
+<script src="../component-demo/vue.js"></script>
+<script>
+    Vue.component('counter', {
+        template: `<div @click="handleClick">{{number}}</div>`,
+        data() {
+            return {
+                number: 0,
+            }
+        },
+        methods: {
+            handleClick() {
+                this.number += 1
+                this.$emit('change')
+            }
+        }
+    })
+
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            total: 0,
+        },
+        methods: {
+            handleChange() {
+                this.total = this.$refs.one.number + this.$refs.two.number
+            }
+        }
+        // computed: {
+        //     // 页面最开始渲染，先调用computed中的函数，再生成vm实例
+        //     totalCount() {
+        //         // debugger
+        //         // return vm.$refs.counter1.number + vm.$refs.counter2.number
+        //     }
+        // }
+    })
+</script>
+
+</html>

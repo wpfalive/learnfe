@@ -10,7 +10,7 @@
     <div id="app">
         <!-- 不推荐index作为key值 -->
         <!-- <div v-for="item of list" :key="item.id">
-            {{item.content}} --- {{item.id}}
+            {{item.content}} - {{item.id}}
         </div> -->
         <!--  template 帮我们包裹一些元素，但不会真正渲染到页面上 -->
         <!-- <template v-for="item in list">
@@ -32,7 +32,10 @@
             // 这种方式是不行的 vm.list[4] = 'aaa'
             // Vue支持：pop push shift unshift splice sort reverse 
             // 或直接修改list的引用
+            // 或者使用vue提供的set方法
+            // vm.$set(vm.userInfo, 'address', 'beijing') 或Vue.set()
 
+            // vm.$set(list, 0, {...})
             list: [{
                     id: '01',
                     content: 'hello',
