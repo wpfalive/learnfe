@@ -6,16 +6,17 @@
             </li>
         </template>
     </awesome-list>
+    <ul>
+        <li @click="currentView = 'home'">home</li>
+        <li @click="currentView = 'post'">post</li>
+        <li @click="currentView = 'archive'">archive</li>
+    </ul>
+    <component :is="currentView"></component>
 </div>
 <div id="example">{{message}}
      <example></example>
 </div>
-<ul>
-    <li @click="currentView = 'home'"></li>
-    <li @click="currentView = 'post'"></li>
-    <li @click="currentView = 'archive'"></li>
-</ul>
-<component :is="currentView"></component>
+
 <script src="./vue.js"></script>
 <script>
     Vue.component('awesome-list', {
@@ -44,7 +45,7 @@
             }
         }
     })
-    var vm = new Vue({
+    var app = new Vue({
         el: '#app',
         data: {
             currentView: 'home',
@@ -76,10 +77,13 @@
                 }
             },
             home: {
-                template: `<div>home</div>`,
+                template: `<div>show home</div>`,
             },
             archive: {
-                template: `<div>archive</div>`,
+                template: `<div>show archive</div>`,
+            },
+            post: {
+                template: `<div>show post</div>`
             }
         }
     })

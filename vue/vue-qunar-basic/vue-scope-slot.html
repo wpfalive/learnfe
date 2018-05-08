@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作用域插槽</title>
+    <!-- 当子组件做循环，或者某一部分dom结构由外部传进来的时候，使用作用域插槽 -->
+</head>
+
+<body>
+    <div id="app">
+        <!-- 固定写法 -->
+        <!-- 这里的props叫什么都可以 -->
+        <!-- 这里可以用li, 也可以用h1 -->
+        <child>
+            <template slot-scope="props">
+                <li>{{props.item}}</li>
+            </template>
+        </child>
+        
+    </div>
+    <script src="../component-demo/vue.js"></script>
+    <script>
+        // child组件可能在很多地方被调用，我们希望每一个调用的地方，child怎么渲染，列表的样式，不由child组件控制，而是外部告诉我们，child组件的每一项，应该如何渲染
+        // 即代码不含 li标签，而是由一个slot取代
+        Vue.component('child', {
+            data() {
+                return {
+                    list: [1, 2, 3, 4]
+                }
+            },
+            // template: `<div>
+            //             <ul>
+            //               <li v-for="item in list">{{item}}</li>
+            //             </ul>
+            //            </div>`
+            template: `<div>
+                            <ul>
+                                <slot v-for="item of list"
+                                    :item=item
+                                ></slot>
+                            </ul>
+                        </div>`,
+        })
+        var vm = new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>

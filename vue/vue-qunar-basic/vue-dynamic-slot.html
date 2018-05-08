@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态组件</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- component 指的就是动态组件 -->
+        <!-- 每次type值切换，vue底层销毁一个组件，然后渲染另一个组件 -->
+        <!-- 有些场景我们希望组件不要被销毁(比如计算了值)，而是不可见，这时候可以加上v-once -->
+        <component :is="type"></component>
+
+        <!-- <child-one v-if="type === 'child-one'"></child-one>
+        <child-two v-if="type === 'child-two'"></child-two> -->
+        <button @click="handleClick">change</button>
+    </div>
+    <script src="../component-demo/vue.js"></script>
+    <script>
+        Vue.component('child-one', {
+          template: `<div v-once>child - one</div>`
+        })
+        Vue.component('child-two', {
+            template: `<div v-once>child - two</div>`
+          })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                type: 'child-one'
+            },
+            methods: {
+                handleClick() {
+                    this.type = this.type === 'child-one' ? 'child-two' : 'child-one'
+                }
+            }
+        })
+    </script>
+</body>
+</html>
