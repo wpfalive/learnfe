@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>velocity.js实现vue动画效果</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- @before-leave="handleBeforeLeave" @leave="handleLeave" @after-leave="handleAfter" -->
+    <transition 
+      name="fade"
+      @before-enter="handleBeforeEnter"
+      @enter="handleEnter"
+      @after-enter="handleAfterEnter"
+    >
+      <div v-if="show">
+        <div v-if="show">hello world</div>
+      </div>
+    </transition>
+    <button @click="handleClick">change</button>
+  </div>
+
+  <script src="./vue.js"></script>
+  <script src="./velocity.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        show: true,
+      },
+      methods: {
+        handleClick() {
+          this.show = !this.show
+        },
+        // el指的是动画包裹的div标签
+        handleBeforeEnter(el) {
+          el.style.color="red"
+        },
+        handleEnter(el, done) {
+          setTimeout(() => {
+            el.style.color = 'green'
+          }, 2000)
+          // 告诉Vue动画已经执行完了
+          // done被调用后，又会触发handleAfterEnter函数
+          setTimeout(() => {
+            done()
+          }, 1000)
+        },
+        handleAfterEnter(el) {
+          setTimeout(() => {
+            el.style.color = 'pink'
+          }, 5000)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

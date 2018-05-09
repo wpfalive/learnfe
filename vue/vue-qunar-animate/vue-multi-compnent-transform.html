@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue中多个元素或组件的过渡</title>
+  <style>
+    .v-enter, .v-leave-to {
+      opacity: 0;
+    }
+    .v-enter-active, .v-leave-active {
+      transition: opacity 1s;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- in-out先进入，再隐藏 -->
+    <!-- <transition mode="out-in"> -->
+      <!-- 给每个dom一个key，这样可以告诉vue不去复用之前的元素 -->
+      <!-- <div id="hello" v-if="show" key="hello">hello world</div> -->
+      <!-- <div v-else id="bye" key="bye">bye world</div> -->
+    <!-- <transition> -->
+    <transition mode="out-in">
+      <component :is="type" @click="handleTypeClick"></component>
+    </transition>
+
+    <button @click="handleTypeClick">change</button>
+  </div>
+
+  <script src="./vue.js"></script>
+  <script src="./velocity.min.js"></script>
+  <script>
+
+    Vue.component('child-1', {
+      template: `<div>child-1</div>`,
+    })
+    Vue.component('child-2', {
+      template: `<div>child-2</div>`,
+    })
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        show: true,
+        type: 'child-1'
+      },
+      methods: {
+        handleClick() {
+          this.show = !this.show
+        },
+        // el指的是动画包裹的div标签
+        // handleBeforeEnter(el) {
+        //   el.style.opacity = 0
+        // },
+        // handleEnter(el, done) {
+        //   Velocity(el, {
+        //     opacity: 1
+        //   }, {
+        //       duration: 1000,
+        //       complete: done
+        //     })
+        // },
+        // handleAfterEnter(el) {
+        //   console.log('动画结束')
+        // },
+        handleTypeClick() {
+          console.log('type')
+          this.type = this.type === 'child-1' ? 'child-2' : 'child-1'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

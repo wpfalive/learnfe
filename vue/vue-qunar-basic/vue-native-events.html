@@ -10,7 +10,7 @@
 
 <body>
     <div id="app">
-        <!-- 在child组件上绑定的时间，指的是监听自定义事件 必须在子组件中触发父组件的事件 this.$emit('handleClick') -->
+        <!-- 在child组件上绑定的事件，指的是监听自定义事件 必须在子组件中触发父组件的事件 this.$emit('handleClick') -->
         <!-- 也可以在click后面加上.native事件修饰符 -->
         <child @click.native="handleClick"></child>
     </div>

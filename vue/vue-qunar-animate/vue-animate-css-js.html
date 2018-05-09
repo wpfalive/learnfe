@@ -1,22 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>css animate</title>
+  <title>Vue 中使用animate.css库</title>
+  <link rel="stylesheet" href="./animate.css">
   <style>
-    .fade-enter, .fade-leave-to {
-      opacity: 0;
+
+    /* @keyframes bounce-in {
+      0% {
+        transform: scale(0)
+      }
+      50% {
+        transform: scale(1.5)
+      }
+      100% {
+        transform: scale(1)
+      }
     }
-    .fade-enter-active, .fade-leave-active {
-      transition: opacity 3s;
+    .active {
+      transform-origin: left center;
+      animation: bounce-in 1s;
     }
+    .leave {
+      transform-origin: left center;
+      animation: bounce-in 1s reverse;
+    } */
+
   </style>
 </head>
+
 <body>
   <div id="app">
-    <transition name="fade">
+    <!-- 自定义自动添加的class的名字 -->
+    <transition 
+      name="fade" 
+      enter-active-class="animated zoomin"
+      leave-active-class="animated zoomout"
+    >
       <div v-if="show">hello world</div>
     </transition>
     <button @click="handleClick">change</button>
@@ -37,4 +60,5 @@
     })
   </script>
 </body>
+
 </html>
